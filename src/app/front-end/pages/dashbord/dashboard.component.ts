@@ -176,3 +176,6 @@ export class DashboardComponent implements OnInit {
   };
 
 }
+
+export class DashbordComponent {
+}

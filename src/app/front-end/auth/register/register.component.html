@@ -1,207 +1,213 @@
-<section class="register-page">
-  <div class="overlay d-flex justify-content-center align-items-center">
-    <div class="register-card">
+<section class="register-page min-vh-100 d-flex justify-content-center align-items-center py-5 bg-light">
+  <div class="overlay w-100 d-flex justify-content-center align-items-center px-3">
+    <div class="register-card bg-white rounded-4 shadow-lg p-4 p-md-5 w-100" style="max-width: 640px;">
 
-      <!-- LOGO -->
-      <div class="text-center mb-4">
-        <img src="assets/images/logo-ea-login.png" alt="Logo" class="register-logo" />
+      <div class="text-center mb-4 pb-2">
+        <img src="assets/images/logo-ea-login.png" alt="Logo Élite Académie" class="register-logo img-fluid" style="max-height: 75px;" />
       </div>
 
-      <!-- STEPPER HEADER -->
-      <div class="stepper-header mb-4">
-        <div class="step" [class.active]="currentStep >= 1" [class.done]="currentStep > 1">
-          <div class="step-circle">
-            <i *ngIf="currentStep > 1" class="bi bi-check-lg"></i>
-            <span *ngIf="currentStep <= 1">1</span>
+      <div class="stepper-header d-flex align-items-center justify-content-between mb-5 position-relative">
+
+        <div class="step text-center position-relative z-3" [class.active]="currentStep >= 1" [class.done]="currentStep > 1">
+          <div class="step-circle rounded-circle d-flex align-items-center justify-content-center mx-auto transition-all"
+               [ngClass]="currentStep === 1 ? 'bg-success text-white shadow' : (currentStep > 1 ? 'bg-success text-white' : 'bg-secondary-subtle text-muted')">
+            <i *ngIf="currentStep > 1" class="bi bi-check-lg fw-bold"></i>
+            <span *ngIf="currentStep <= 1" class="fw-semibold">1</span>
           </div>
-          <div class="step-label">Identité</div>
+          <div class="step-label small fw-medium mt-2" [class.text-success]="currentStep >= 1">Identité</div>
         </div>
-        <div class="step-line" [class.done]="currentStep > 1"></div>
-        <div class="step" [class.active]="currentStep >= 2" [class.done]="currentStep > 2">
-          <div class="step-circle">
-            <i *ngIf="currentStep > 2" class="bi bi-check-lg"></i>
-            <span *ngIf="currentStep <= 2">2</span>
+
+        <div class="step-line flex-grow-1 mx-2 bg-secondary-subtle" style="height: 2px;" [class.bg-success]="currentStep > 1"></div>
+
+        <div class="step text-center position-relative z-3" [class.active]="currentStep >= 2" [class.done]="currentStep > 2">
+          <div class="step-circle rounded-circle d-flex align-items-center justify-content-center mx-auto transition-all"
+               [ngClass]="currentStep === 2 ? 'bg-success text-white shadow' : (currentStep > 2 ? 'bg-success text-white' : 'bg-secondary-subtle text-muted')">
+            <i *ngIf="currentStep > 2" class="bi bi-check-lg fw-bold"></i>
+            <span *ngIf="currentStep <= 2" class="fw-semibold">2</span>
           </div>
-          <div class="step-label">Coordonnées</div>
+          <div class="step-label small fw-medium mt-2" [class.text-success]="currentStep >= 2">Coordonnées</div>
         </div>
-        <div class="step-line" [class.done]="currentStep > 2"></div>
-        <div class="step" [class.active]="currentStep >= 3">
-          <div class="step-circle">3</div>
-          <div class="step-label">Sécurité</div>
+
+        <div class="step-line flex-grow-1 mx-2 bg-secondary-subtle" style="height: 2px;" [class.bg-success]="currentStep > 2"></div>
+
+        <div class="step text-center position-relative z-3" [class.active]="currentStep >= 3">
+          <div class="step-circle rounded-circle d-flex align-items-center justify-content-center mx-auto transition-all"
+               [ngClass]="currentStep === 3 ? 'bg-success text-white shadow' : 'bg-secondary-subtle text-muted'">
+            <span class="fw-semibold">3</span>
+          </div>
+          <div class="step-label small fw-medium mt-2" [class.text-success]="currentStep === 3">Sécurité</div>
         </div>
       </div>
 
-      <!-- ÉTAPE 1 : Identité -->
-      <div *ngIf="currentStep === 1" class="step-content animate-step">
-        <h5 class="step-title">Votre identité</h5>
-        <p class="step-subtitle">Qui êtes-vous ?</p>
+      <div *ngIf="currentStep === 1" class="step-content animate-fade-in">
+        <h5 class="step-title fw-bold text-dark mb-1">Votre identité</h5>
+        <p class="step-subtitle text-muted small mb-4">Qui êtes-vous ?</p>
 
-        <div class="row g-3">
+        <div class="row g-4">
           <div class="col-md-6">
-            <label class="form-label">Nom <span class="text-danger">*</span></label>
-            <div class="input-group">
-              <span class="input-group-text"><i class="bi bi-person"></i></span>
-              <input type="text" class="form-control" placeholder="Votre nom"
+            <label class="form-label fw-medium small text-secondary">Nom <span class="text-danger">*</span></label>
+            <div class="custom-input-group d-flex align-items-center border rounded-3 px-3 py-2 transition-all">
+              <span class="text-muted me-2"><i class="bi bi-person fs-5"></i></span>
+              <input type="text" class="form-control border-0 p-0 shadow-none bg-transparent" placeholder="Votre nom"
                      [(ngModel)]="form.nom" name="nom" />
             </div>
           </div>
+
           <div class="col-md-6">
-            <label class="form-label">Prénom <span class="text-danger">*</span></label>
-            <div class="input-group">
-              <span class="input-group-text"><i class="bi bi-person"></i></span>
-              <input type="text" class="form-control" placeholder="Votre prénom"
+            <label class="form-label fw-medium small text-secondary">Prénom <span class="text-danger">*</span></label>
+            <div class="custom-input-group d-flex align-items-center border rounded-3 px-3 py-2 transition-all">
+              <span class="text-muted me-2"><i class="bi bi-person fs-5"></i></span>
+              <input type="text" class="form-control border-0 p-0 shadow-none bg-transparent" placeholder="Votre prénom"
                      [(ngModel)]="form.prenom" name="prenom" />
             </div>
           </div>
 
-          <!-- CHAMP RÔLE - BOUTONS RADIO VISUELS -->
-          <div class="col-12">
-            <label class="form-label">Vous êtes <span class="text-danger">*</span></label>
-            <div class="role-selector">
-              <label class="role-card" [class.selected]="form.role === 'repetiteur'">
-                <input type="radio" [(ngModel)]="form.role" name="role" value="repetiteur" />
-                <div class="role-icon">
-                  <i class="bi bi-easel"></i>
+          <div class="col-12 mt-4">
+            <label class="form-label fw-medium small text-secondary mb-3">Vous êtes <span class="text-danger">*</span></label>
+            <div class="role-selector d-flex gap-3">
+
+              <label class="role-card flex-fill border rounded-4 p-4 position-relative cursor-pointer text-center transition-all select-none"
+                     [ngClass]="form.role === 'repetiteur' ? 'border-success bg-success-subtle shadow-sm' : 'border-secondary-subtle bg-white'">
+                <input type="radio" [(ngModel)]="form.role" name="role" value="repetiteur" class="d-none" />
+                <div class="role-icon mx-auto rounded-circle d-flex align-items-center justify-content-center mb-3 transition-all"
+                     [ngClass]="form.role === 'repetiteur' ? 'bg-success text-white' : 'bg-light text-secondary'">
+                  <i class="bi bi-easel fs-3"></i>
                 </div>
-                <div class="role-title">Répétiteur</div>
-                <div class="role-check">
-                  <i class="bi bi-check-circle-fill"></i>
+                <div class="role-title fw-bold" [ngClass]="form.role === 'repetiteur' ? 'text-success' : 'text-dark'">Répétiteur</div>
+                <div class="role-check position-absolute top-0 end-0 p-3 transition-all opacity-0" [class.opacity-100]="form.role === 'repetiteur'">
+                  <i class="bi bi-check-circle-fill text-success fs-5"></i>
                 </div>
               </label>
 
-              <label class="role-card" [class.selected]="form.role === 'parent'">
-                <input type="radio" [(ngModel)]="form.role" name="role" value="parent" />
-                <div class="role-icon">
-                  <i class="bi bi-people"></i>
+              <label class="role-card flex-fill border rounded-4 p-4 position-relative cursor-pointer text-center transition-all select-none"
+                     [ngClass]="form.role === 'parent' ? 'border-success bg-success-subtle shadow-sm' : 'border-secondary-subtle bg-white'">
+                <input type="radio" [(ngModel)]="form.role" name="role" value="parent" class="d-none" />
+                <div class="role-icon mx-auto rounded-circle d-flex align-items-center justify-content-center mb-3 transition-all"
+                     [ngClass]="form.role === 'parent' ? 'bg-success text-white' : 'bg-light text-secondary'">
+                  <i class="bi bi-people fs-3"></i>
                 </div>
-                <div class="role-title">Parent</div>
-                <div class="role-check">
-                  <i class="bi bi-check-circle-fill"></i>
+                <div class="role-title fw-bold" [ngClass]="form.role === 'parent' ? 'text-success' : 'text-dark'">Parent</div>
+                <div class="role-check position-absolute top-0 end-0 p-3 transition-all opacity-0" [class.opacity-100]="form.role === 'parent'">
+                  <i class="bi bi-check-circle-fill text-success fs-5"></i>
                 </div>
               </label>
+
             </div>
           </div>
         </div>
 
-        <div class="d-flex justify-content-end mt-4">
-          <button class="btn btn-next" (click)="nextStep()">
-            Suivant <i class="bi bi-arrow-right"></i>
+        <div class="d-flex justify-content-end mt-5">
+          <button class="btn btn-success rounded-pill px-4 py-2 fw-medium group shadow-sm transition-all d-flex align-items-center gap-2" (click)="nextStep()">
+            Suivant <i class="bi bi-arrow-right transition-transform"></i>
           </button>
         </div>
       </div>
 
-      <!-- ÉTAPE 2 : Coordonnées -->
-      <div *ngIf="currentStep === 2" class="step-content animate-step">
-        <h5 class="step-title">Vos coordonnées</h5>
-        <p class="step-subtitle">Comment vous contacter ?</p>
+      <div *ngIf="currentStep === 2" class="step-content animate-fade-in">
+        <h5 class="step-title fw-bold text-dark mb-1">Vos coordonnées</h5>
+        <p class="step-subtitle text-muted small mb-4">Comment vous contacter ?</p>
 
-        <div class="row g-3">
+        <div class="row g-4">
           <div class="col-md-6">
-            <label class="form-label">Téléphone <span class="text-danger">*</span></label>
-            <div class="input-group">
-              <span class="input-group-text"><i class="bi bi-telephone"></i></span>
-              <input type="tel" class="form-control" placeholder="Votre numéro"
+            <label class="form-label fw-medium small text-secondary">Téléphone <span class="text-danger">*</span></label>
+            <div class="custom-input-group d-flex align-items-center border rounded-3 px-3 py-2 transition-all">
+              <span class="text-muted me-2"><i class="bi bi-telephone fs-5"></i></span>
+              <input type="tel" class="form-control border-0 p-0 shadow-none bg-transparent" placeholder="Votre numéro"
                      [(ngModel)]="form.telephone" name="telephone" />
             </div>
           </div>
           <div class="col-md-6">
-            <label class="form-label">Email <span class="text-danger">*</span></label>
-            <div class="input-group">
-              <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-              <input type="email" class="form-control" placeholder="Votre email"
+            <label class="form-label fw-medium small text-secondary">Email <span class="text-danger">*</span></label>
+            <div class="custom-input-group d-flex align-items-center border rounded-3 px-3 py-2 transition-all">
+              <span class="text-muted me-2"><i class="bi bi-envelope fs-5"></i></span>
+              <input type="email" class="form-control border-0 p-0 shadow-none bg-transparent" placeholder="Votre email"
                      [(ngModel)]="form.email" name="email" />
             </div>
           </div>
           <div class="col-md-6">
-            <label class="form-label">Commune</label>
-            <div class="input-group">
-              <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
-              <input type="text" class="form-control" placeholder="Votre commune"
+            <label class="form-label fw-medium small text-secondary">Commune</label>
+            <div class="custom-input-group d-flex align-items-center border rounded-3 px-3 py-2 transition-all">
+              <span class="text-muted me-2"><i class="bi bi-geo-alt"></i></span>
+              <input type="text" class="form-control border-0 p-0 shadow-none bg-transparent" placeholder="Votre commune"
                      [(ngModel)]="form.commune" name="commune" />
             </div>
           </div>
           <div class="col-md-6">
-            <label class="form-label">Quartier</label>
-            <div class="input-group">
-              <span class="input-group-text"><i class="bi bi-map"></i></span>
-              <input type="text" class="form-control" placeholder="Votre quartier"
+            <label class="form-label fw-medium small text-secondary">Quartier</label>
+            <div class="custom-input-group d-flex align-items-center border rounded-3 px-3 py-2 transition-all">
+              <span class="text-muted me-2"><i class="bi bi-map"></i></span>
+              <input type="text" class="form-control border-0 p-0 shadow-none bg-transparent" placeholder="Votre quartier"
                      [(ngModel)]="form.quartier" name="quartier" />
             </div>
           </div>
         </div>
 
-        <div class="d-flex justify-content-between mt-4">
-          <button class="btn btn-back" (click)="prevStep()">
+        <div class="d-flex justify-content-between mt-5">
+          <button class="btn btn-outline-secondary rounded-pill px-4 py-2 fw-medium d-flex align-items-center gap-2" (click)="prevStep()">
             <i class="bi bi-arrow-left"></i> Retour
           </button>
-          <button class="btn btn-next" (click)="nextStep()">
+          <button class="btn btn-success rounded-pill px-4 py-2 fw-medium shadow-sm d-flex align-items-center gap-2" (click)="nextStep()">
             Suivant <i class="bi bi-arrow-right"></i>
           </button>
         </div>
       </div>
 
-      <!-- ÉTAPE 3 : Sécurité -->
-      <div *ngIf="currentStep === 3" class="step-content animate-step">
-        <h5 class="step-title">Sécurité</h5>
-        <p class="step-subtitle">Choisissez un mot de passe sécurisé</p>
+      <div *ngIf="currentStep === 3" class="step-content animate-fade-in">
+        <h5 class="step-title fw-bold text-dark mb-1">Sécurité</h5>
+        <p class="step-subtitle text-muted small mb-4">Choisissez un mot de passe sécurisé</p>
 
-        <div class="row g-3">
+        <div class="row g-4">
           <div class="col-12">
-            <label class="form-label">Mot de passe <span class="text-danger">*</span></label>
-            <div class="input-group">
-              <span class="input-group-text"><i class="bi bi-lock"></i></span>
-              <input [type]="showPassword ? 'text' : 'password'" class="form-control"
-                     placeholder="Votre mot de passe"
-                     [(ngModel)]="form.password" name="password"
-                     autocomplete="new-password" />
-              <span class="input-group-text" style="cursor:pointer" (click)="showPassword = !showPassword">
+            <label class="form-label fw-medium small text-secondary">Mot de passe <span class="text-danger">*</span></label>
+            <div class="custom-input-group d-flex align-items-center border rounded-3 px-3 py-2 transition-all">
+              <span class="text-muted me-2"><i class="bi bi-lock fs-5"></i></span>
+              <input [type]="showPassword ? 'text' : 'password'" class="form-control border-0 p-0 shadow-none bg-transparent"
+                     placeholder="Votre mot de passe" [(ngModel)]="form.password" name="password" autocomplete="new-password" />
+              <span class="text-muted cursor-pointer ms-2" (click)="showPassword = !showPassword">
                 <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
               </span>
             </div>
           </div>
           <div class="col-12">
-            <label class="form-label">Confirmer le mot de passe <span class="text-danger">*</span></label>
-            <div class="input-group">
-              <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-              <input [type]="showConfirm ? 'text' : 'password'" class="form-control"
-                     placeholder="Confirmez votre mot de passe"
-                     [(ngModel)]="form.confirm" name="confirm"
-                     autocomplete="new-password" />
-              <span class="input-group-text" style="cursor:pointer" (click)="showConfirm = !showConfirm">
+            <label class="form-label fw-medium small text-secondary">Confirmer le mot de passe <span class="text-danger">*</span></label>
+            <div class="custom-input-group d-flex align-items-center border rounded-3 px-3 py-2 transition-all">
+              <span class="text-muted me-2"><i class="bi bi-lock-fill fs-5"></i></span>
+              <input [type]="showConfirm ? 'text' : 'password'" class="form-control border-0 p-0 shadow-none bg-transparent"
+                     placeholder="Confirmez votre mot de passe" [(ngModel)]="form.confirm" name="confirm" autocomplete="new-password" />
+              <span class="text-muted cursor-pointer ms-2" (click)="showConfirm = !showConfirm">
                 <i [class]="showConfirm ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
               </span>
             </div>
           </div>
 
-          <!-- CONDITIONS -->
-          <div class="col-12 mt-2">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox"
-                     [(ngModel)]="form.acceptConditions" name="conditions" id="conditions" />
-              <label class="form-check-label" for="conditions">
-                J'accepte les <a href="#" class="text-success">conditions générales</a>
+          <div class="col-12 mt-3">
+            <div class="form-check d-flex align-items-center">
+              <input class="form-check-input border-secondary-subtle mt-0" type="checkbox"
+                     [(ngModel)]="form.acceptConditions" name="conditions" id="conditions" style="width: 1.15rem; height: 1.15rem;" />
+              <label class="form-check-label small text-secondary ms-2" for="conditions">
+                J'accepte les <a href="#" class="text-success fw-medium text-decoration-none border-bottom border-success">conditions générales</a>
               </label>
             </div>
           </div>
         </div>
 
-        <div class="d-flex justify-content-between mt-4">
-          <button class="btn btn-back" (click)="prevStep()">
+        <div class="d-flex justify-content-between mt-5">
+          <button class="btn btn-outline-secondary rounded-pill px-4 py-2 fw-medium d-flex align-items-center gap-2" (click)="prevStep()">
             <i class="bi bi-arrow-left"></i> Retour
           </button>
-          <button class="btn btn-submit" (click)="onSubmit()">
-            <i class="bi bi-check-circle"></i> S'inscrire
+          <button class="btn btn-success rounded-pill px-4 py-2 fw-medium shadow" (click)="onSubmit()">
+            <i class="bi bi-check-circle-fill me-1"></i> S'inscrire
           </button>
         </div>
       </div>
 
-      <!-- FOOTER -->
-      <div class="text-center mt-4">
+      <hr class="text-secondary-subtle my-4" />
+      <div class="text-center">
         <span class="text-muted small">Vous avez déjà un compte ? </span>
-        <a routerLink="/auth/login" class="text-success fw-bold">Se connecter</a>
+        <a routerLink="/auth/login" class="text-success fw-bold text-decoration-none hover-underline">Se connecter</a>
       </div>
       <div class="text-center mt-2">
-        <p class="text-muted small">© 2026 Structure Elite Academie</p>
+        <p class="text-muted opacity-70" style="font-size: 0.75rem;">© 2026 Structure Elite Academie</p>
       </div>
 
     </div>
