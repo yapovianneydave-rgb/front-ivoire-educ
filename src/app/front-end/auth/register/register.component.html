@@ -2,10 +2,16 @@
   <div class="overlay w-100 d-flex justify-content-center align-items-center px-3">
     <div class="register-card bg-white rounded-4 shadow-lg p-4 p-md-5 w-100" style="max-width: 640px;">
 
-      <div class="text-center mb-4 pb-2">
-        <img src="assets/images/logo-ea-login.png" alt="Logo Élite Académie" class="register-logo img-fluid" style="max-height: 75px;" />
+      <!-- LOGO (Nouveau logo IvoireEduc avec effet de transparence) -->
+      <div class="logo-container-transparent text-center mb-4 pb-2">
+        <img
+          src="assets/images/IvoireEduc_Elite_logo_v4.jpg"
+          alt="Logo IvoireEduc Elite"
+          class="login-logo-new"
+        />
       </div>
 
+      <!-- STEPPER HEADER -->
       <div class="stepper-header d-flex align-items-center justify-content-between mb-5 position-relative">
 
         <div class="step text-center position-relative z-3" [class.active]="currentStep >= 1" [class.done]="currentStep > 1">
@@ -39,6 +45,7 @@
         </div>
       </div>
 
+      <!-- ETAPE 1 -->
       <div *ngIf="currentStep === 1" class="step-content animate-fade-in">
         <h5 class="step-title fw-bold text-dark mb-1">Votre identité</h5>
         <p class="step-subtitle text-muted small mb-4">Qui êtes-vous ?</p>
@@ -103,6 +110,7 @@
         </div>
       </div>
 
+      <!-- ETAPE 2 -->
       <div *ngIf="currentStep === 2" class="step-content animate-fade-in">
         <h5 class="step-title fw-bold text-dark mb-1">Vos coordonnées</h5>
         <p class="step-subtitle text-muted small mb-4">Comment vous contacter ?</p>
@@ -152,6 +160,7 @@
         </div>
       </div>
 
+      <!-- ETAPE 3 -->
       <div *ngIf="currentStep === 3" class="step-content animate-fade-in">
         <h5 class="step-title fw-bold text-dark mb-1">Sécurité</h5>
         <p class="step-subtitle text-muted small mb-4">Choisissez un mot de passe sécurisé</p>
@@ -201,6 +210,7 @@
         </div>
       </div>
 
+      <!-- FOOTER -->
       <hr class="text-secondary-subtle my-4" />
       <div class="text-center">
         <span class="text-muted small">Vous avez déjà un compte ? </span>

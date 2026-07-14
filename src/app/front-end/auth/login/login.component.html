@@ -1,73 +1,79 @@
-<section class="sign-in-page">
-  <div class="overlay d-flex justify-content-center align-items-center">
-    <div class="sign-in-from">
+<section class="login-page">
+  <div class="overlay d-flex justify-content-center align-items-center w-100 min-vh-100">
 
-      <!-- LOGO -->
-      <div class="logo-container text-center mb-3">
-        <img src="assets/images/logo-ea-login.png" alt="Logo Elite Académie" class="login-logo" />
+    <!-- Carte de connexion SOMBRE (Premium & Graphique) -->
+    <div class="login-card p-4 p-md-5 mx-3 w-100" style="max-width: 450px;">
+
+      <!-- LOGO (IvoireEduc parfaitement fondu dans le noir) -->
+      <div class="logo-container text-center">
+        <img
+          src="assets/images/IvoireEduc_Elite_logo_v4.jpg"
+          alt="Logo IvoireEduc Elite"
+          class="login-logo"
+        />
       </div>
 
       <!-- MESSAGE -->
-      <p class="login-message text-center">
+      <p class="login-desc text-center mb-4">
         Entrez votre identifiant et votre mot de passe pour accéder à votre application.
       </p>
 
-      <!-- NOM UTILISATEUR / DIVIDER -->
-      <div class="divider-name d-flex align-items-center my-3">
-        <hr class="flex-grow-1">
-        <span class="mx-3 fw-bold">ELITE ACADÉMIE</span>
-        <hr class="flex-grow-1">
+      <!-- SÉPARATEUR DE MARQUE -->
+      <div class="login-separator">
+        IVOIRE EDUC ELITE
       </div>
 
       <!-- FORMULAIRE -->
       <form (ngSubmit)="onLogin()">
 
-        <!-- Identifiant -->
-        <div class="input-group mb-3 custom-input-group">
+        <!-- Champ Identifiant -->
+        <div class="login-input-group mb-3">
           <input
             type="text"
-            class="form-control custom-field"
-            placeholder="Matricule"
+            placeholder="Identifiant"
             [(ngModel)]="identifiant"
             name="identifiant"
             autocomplete="username"
+            required
           />
-          <span class="input-group-text custom-icon">
+          <span class="input-icon">
             <i class="bi bi-envelope-fill"></i>
           </span>
         </div>
 
-        <!-- Mot de passe -->
-        <div class="input-group mb-4 custom-input-group">
+        <!-- Champ Mot de passe -->
+        <div class="login-input-group mb-4">
           <input
             [type]="showPassword ? 'text' : 'password'"
-            class="form-control custom-field"
             placeholder="Mot de passe"
             [(ngModel)]="password"
             name="password"
             autocomplete="current-password"
+            required
           />
-          <span class="input-group-text custom-icon" (click)="togglePassword()" style="cursor:pointer">
+          <span class="input-icon" (click)="togglePassword()" style="cursor: pointer;">
             <i [class]="showPassword ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
           </span>
         </div>
 
-        <!-- Bouton -->
-        <div class="text-center">
-          <button type="submit" class="btn btn-login">
+        <!-- Bouton Connexion (Dégradé Orange) -->
+        <div class="text-center d-grid gap-2">
+          <button type="submit" class="btn btn-login w-100 py-2">
             Connexion
           </button>
         </div>
 
-        <div class="text-center mt-3">
-          <span>Vous n'avez pas de compte ?</span>
-          <a routerLink="/auth/register">Inscrivez-vous</a>
+        <!-- Lien de redirection vers l'inscription -->
+        <div class="text-center mt-4 login-footer-text">
+          <span>Vous n'avez pas de compte ? </span>
+          <a routerLink="/auth/register" class="link-register">Inscrivez-vous</a>
         </div>
 
       </form>
 
-      <div class="text-center mt-4">
-        <p class="text-muted small">© 2026 Structure Elite Académie</p>
+      <!-- Copyright -->
+      <div class="text-center mt-4 pt-2">
+        <p class="copyright-text mb-0">© 2026 Structure Ivoire Educ Elite</p>
       </div>
 
     </div>

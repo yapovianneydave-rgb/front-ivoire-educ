@@ -1,11 +1,15 @@
+/* ===== Structure & Fond de la page ===== */
 .register-page {
   position: relative;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow-x: hidden;
+  perspective: 1000px; /* Prépare la page pour les effets 3D */
 }
 
+/* Image en arrière-plan */
 .register-page::before {
   content: '';
   position: absolute;
@@ -14,11 +18,12 @@
   z-index: 0;
 }
 
+/* Filtre sombre transparent par-dessus l'image */
 .register-page::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(15, 40, 25, 0.55), rgba(46, 125, 79, 0.35));
+  background: linear-gradient(135deg, rgba(8, 26, 16, 0.85), rgba(17, 22, 19, 0.9));
   z-index: 1;
 }
 
@@ -28,25 +33,45 @@
   width: 100%;
 }
 
-/* ===== Carte : forme asymétrique + accents vert/or ===== */
+/* ===== Carte d'inscription SOMBRE avec ANIMATION de survol ===== */
 .register-card {
   position: relative;
-  background: #ffffff;
-  border-radius: 48px 12px 48px 12px;
-  border: 1px solid rgba(46, 125, 79, 0.08);
-  box-shadow: 0 25px 60px -20px rgba(15, 40, 25, 0.35), 0 2px 8px rgba(0,0,0,0.05);
+  background: #111613 !important; /* Noir profond */
+  border-radius: 32px 16px 32px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+
+  /* Ombre initiale douce */
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.8),
+  0 0 0 1px rgba(255, 255, 255, 0.05);
+
   overflow: hidden;
+  /* Transition ultra-fluide */
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+  box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+  border-color 0.6s ease;
 }
 
+/* --- ANIMATION DE SURVOL SUR LA CARTE --- */
+.register-card:hover {
+  transform: translateY(-8px) scale(1.01); /* Élévation subtile */
+  border-color: rgba(0, 158, 73, 0.3) !important; /* La bordure s'illumine en vert */
+
+  /* Double halo lumineux en arrière-plan (Vert et Orange) */
+  box-shadow: 0 35px 80px -15px rgba(0, 0, 0, 0.95),
+  -15px 15px 40px -10px rgba(255, 130, 0, 0.15),
+  15px -15px 40px -10px rgba(0, 158, 73, 0.15);
+}
+
+/* Filigranes décoratifs internes */
 .register-card::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
-  width: 140px;
-  height: 140px;
-  background: linear-gradient(135deg, rgba(46, 125, 79, 0.12), transparent 70%);
-  border-radius: 48px 0 100% 0;
+  width: 160px;
+  height: 160px;
+  background: linear-gradient(135deg, rgba(0, 158, 73, 0.15), transparent 75%);
+  border-radius: 32px 0 100% 0;
   z-index: 0;
   pointer-events: none;
 }
@@ -56,10 +81,10 @@
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 140px;
-  height: 140px;
-  background: linear-gradient(315deg, rgba(212, 175, 55, 0.12), transparent 70%);
-  border-radius: 0 48px 0 100%;
+  width: 160px;
+  height: 160px;
+  background: linear-gradient(315deg, rgba(255, 130, 0, 0.15), transparent 75%);
+  border-radius: 0 32px 0 100%;
   z-index: 0;
   pointer-events: none;
 }
@@ -69,126 +94,285 @@
   z-index: 1;
 }
 
-.register-logo {
-  filter: drop-shadow(0 4px 10px rgba(46, 125, 79, 0.15));
+/* ===== Logo + Animation Zoom au survol ===== */
+.logo-container-transparent {
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 250px;
+  margin: 0 auto 1.5rem auto;
 }
 
-/* ===== Stepper ===== */
+.login-logo-new {
+  max-height: 70px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.register-card:hover .login-logo-new {
+  transform: scale(1.06);
+}
+
+/* ===== Textes Généraux ===== */
+h2, .step-title, h3, h4 {
+  color: #ffffff !important;
+}
+
+p, .step-subtitle, .text-muted {
+  color: #E2E8F0 !important;
+}
+
+label, .form-label {
+  color: #FFFFFF !important;
+  font-weight: 500;
+}
+
+/* ===== Stepper Progressif ===== */
 .step-circle {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   font-size: 0.95rem;
-  border: 2px solid transparent;
-  transition: all 0.35s ease;
-}
-
-.step.active .step-circle {
-  border-color: #2E7D4F;
-  transform: scale(1.08);
+  border: 2px solid rgba(255, 255, 255, 0.2) !important;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: #FFFFFF !important;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .step-label {
-  color: #8a8f98;
+  color: #CBD5E1 !important;
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.3px;
   transition: color 0.3s ease;
 }
 
-.step-line {
-  transition: background-color 0.5s ease;
-  border-radius: 2px;
+/* Étape active (Orange) */
+.step.active .step-circle {
+  background-color: #FF8200 !important;
+  border-color: #FF8200 !important;
+  color: #ffffff !important;
+  transform: scale(1.12);
+  box-shadow: 0 0 15px rgba(255, 130, 0, 0.5) !important;
 }
 
-/* ===== Champs de saisie ===== */
+.step.active .step-label {
+  color: #FF8200 !important;
+  font-weight: 600 !important;
+}
+
+/* Étape complétée (Vert) */
+.step.done .step-circle {
+  background-color: #009E49 !important;
+  border-color: #009E49 !important;
+  color: #ffffff !important;
+}
+
+.step.done .step-label {
+  color: #009E49 !important;
+}
+
+.step-line {
+  transition: background-color 0.6s ease;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.step-line.bg-success {
+  background-color: #009E49 !important;
+}
+
+/* ===== Formulaires de Saisie (Inputs Modernes) ===== */
 .custom-input-group {
-  background: #fafbfa;
-  border: 1px solid #e6e8e3 !important;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 12px !important;
+  padding: 0.65rem 1rem !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.custom-input-group:hover {
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  background: rgba(255, 255, 255, 0.07) !important;
 }
 
 .custom-input-group:focus-within {
-  border-color: #2E7D4F !important;
-  background: #ffffff;
-  box-shadow: 0 0 0 4px rgba(46, 125, 79, 0.1);
+  border-color: #FF8200 !important;
+  background: #111613 !important;
+  transform: scale(1.02); /* Légère dilatation */
+  box-shadow: 0 0 15px rgba(255, 130, 0, 0.2);
+}
+
+.custom-input-group .bi {
+  color: #A0AEC0 !important;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .custom-input-group:focus-within .bi {
-  color: #2E7D4F !important;
-}
-
-.custom-input-group input::placeholder {
-  color: #b3b7ae;
-}
-
-/* ===== Sélecteur de rôle ===== */
-.role-card {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.role-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px -12px rgba(46, 125, 79, 0.25);
-}
-
-.role-icon {
-  width: 56px;
-  height: 56px;
-  transition: all 0.3s ease;
-}
-
-.role-card:hover .role-icon {
+  color: #FF8200 !important;
   transform: scale(1.1);
 }
 
-/* ===== Boutons ===== */
+.custom-input-group input {
+  font-size: 0.95rem;
+  color: #ffffff !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+.custom-input-group input::placeholder {
+  color: #A0AEC0 !important;
+  opacity: 1;
+}
+
+/* ===== CARTES DE RÔLES (Interactions dynamiques) ===== */
+.role-card {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 16px !important;
+  padding: 1.75rem 1rem !important;
+  cursor: pointer;
+  /* Transition très réactive */
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.role-card .role-title,
+.role-card h5,
+.role-card p {
+  color: #FFFFFF !important;
+  font-weight: 600;
+}
+
+.role-icon {
+  width: 60px;
+  height: 60px;
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  color: #E2E8F0 !important;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem auto;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Survol des rôles : soulèvement et lueur verte */
+.role-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  border-color: rgba(0, 158, 73, 0.5) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.5) !important;
+}
+
+.role-card:hover .role-icon {
+  background-color: rgba(0, 158, 73, 0.15) !important;
+  color: #009E49 !important;
+  transform: rotate(5deg) scale(1.1); /* Légère rotation de l'icône */
+}
+
+/* RÔLE SÉLECTIONNÉ (Actif) */
+.role-card.border-success {
+  border-color: #009E49 !important;
+  background: rgba(0, 158, 73, 0.12) !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 158, 73, 0.35) !important;
+  transform: scale(1.02);
+}
+
+.role-card.border-success .role-icon {
+  background: #009E49 !important;
+  color: #ffffff !important;
+}
+
+.role-card.border-success .role-title {
+  color: #009E49 !important;
+}
+
+.role-check .text-success {
+  color: #FF8200 !important;
+}
+
+/* ===== Bouton principal avec effet de brillance "Shine" ===== */
 .btn-success {
-  background: linear-gradient(135deg, #2E7D4F, #256B42);
-  border: none;
-  transition: all 0.3s ease;
+  position: relative;
+  background: linear-gradient(135deg, #FF8200, #E06F00) !important;
+  border: none !important;
+  color: #ffffff !important;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 15px rgba(255, 130, 0, 0.35);
+  overflow: hidden; /* Nécessaire pour contenir la brillance */
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Création du reflet lumineux blanc */
+.btn-success::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-25deg);
+  transition: none;
+}
+
+/* Au survol du bouton */
 .btn-success:hover {
-  background: linear-gradient(135deg, #256B42, #1E5A37);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px -8px rgba(46, 125, 79, 0.5);
+  background: linear-gradient(135deg, #FF9529, #FF8200) !important;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(255, 130, 0, 0.5);
 }
 
-.btn-outline-secondary {
-  border-color: #d8dbd3;
-  color: #6b7268;
-  transition: all 0.25s ease;
+/* Passage du reflet brillant */
+.btn-success:hover::after {
+  left: 150%;
+  transition: all 0.8s ease-in-out;
 }
 
-.btn-outline-secondary:hover {
-  background: #f0f2ed;
-  border-color: #c2c7ba;
-  color: #3a3f37;
+/* ===== Pied de page & Animations Liens ===== */
+.text-secondary-subtle {
+  color: rgba(255, 255, 255, 0.4) !important;
 }
 
-/* ===== Animation d'entrée des étapes ===== */
-.animate-fade-in {
-  animation: fadeInStep 0.4s ease;
+.register-card + div,
+.register-card ~ p,
+span {
+  color: #E2E8F0;
 }
 
-@keyframes fadeInStep {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ===== Lien "Se connecter" ===== */
+/* Lien "Se connecter" + Soulignement glissant */
 .hover-underline {
   position: relative;
+  transition: color 0.3s ease;
+  color: #009E49 !important;
+  font-weight: 600;
+  text-decoration: none;
 }
 
 .hover-underline::after {
   content: '';
   position: absolute;
-  left: 0;
   bottom: -2px;
+  left: 0;
   width: 0;
-  height: 1.5px;
-  background: #2E7D4F;
-  transition: width 0.25s ease;
+  height: 2px;
+  background-color: #FF8200; /* Soulignement orange */
+  transition: width 0.3s ease;
+}
+
+.hover-underline:hover {
+  color: #FF8200 !important;
 }
 
 .hover-underline:hover::after {
-  width: 100%;
+  width: 100%; /* S'étend sur toute la largeur */
 }
