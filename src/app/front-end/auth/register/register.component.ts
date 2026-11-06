@@ -35,7 +35,7 @@ export class RegisterComponent {
    * Passage à l'étape suivante avec validation stricte des champs obligatoires
    */
   nextStep() {
-    this.errorMessage = ' Renseigner les informations précédement'; // Réinitialise l'erreur
+    this.errorMessage = ''; // Réinitialise l'erreur avant de revalider
 
     if (this.currentStep === 1) {
       if (!this.form.nom.trim() || !this.form.prenom.trim()) {

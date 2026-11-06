@@ -9,6 +9,7 @@ import { RouterOutlet} from '@angular/router';
 })
 
 export class AppComponent {
-  title = 'elite-academie3 '
+  /** Nom interne de l'application. */
+  readonly title = 'ivoire-educ-elite';
 
 }

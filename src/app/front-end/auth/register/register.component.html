@@ -210,6 +210,13 @@
         </div>
       </div>
 
+      <!-- MESSAGE D'ERREUR (commun aux trois étapes) -->
+      @if (errorMessage) {
+        <div class="register-error mt-4" role="alert">
+          <i class="bi bi-exclamation-circle-fill"></i><span>{{ errorMessage }}</span>
+        </div>
+      }
+
       <!-- FOOTER -->
       <hr class="text-secondary-subtle my-4" />
       <div class="text-center">
