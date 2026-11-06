@@ -1,0 +1,229 @@
+<section class="mdp-page">
+  <div class="overlay d-flex justify-content-center align-items-center w-100 min-vh-100">
+
+    <div class="mdp-card p-4 p-md-5 mx-3 w-100" [class.secousse]="secousse()">
+
+      <!-- LOGO -->
+      <div class="logo-container text-center">
+        <img
+          src="assets/images/IvoireEduc_Elite_logo_v4.jpg"
+          alt="Logo IvoireEduc Elite"
+          class="mdp-logo"
+        />
+      </div>
+
+      <h1 class="mdp-titre text-center">Réinitialiser votre mot de passe</h1>
+      <p class="mdp-intro text-center">
+        Nous vous envoyons un code à usage unique, par SMS ou par email, pour vérifier que
+        ce compte est bien le vôtre.
+      </p>
+
+      <!-- STEPPER -->
+      <div class="stepper">
+        <div class="etape" [class.active]="etape() >= 1" [class.faite]="etape() > 1">
+          <span class="rond">@if (etape() > 1) {<i class="bi bi-check-lg"></i>} @else {1}</span>
+          <span class="libelle">Identité</span>
+        </div>
+        <span class="trait" [class.faite]="etape() > 1"></span>
+        <div class="etape" [class.active]="etape() >= 2" [class.faite]="etape() > 2">
+          <span class="rond">@if (etape() > 2) {<i class="bi bi-check-lg"></i>} @else {2}</span>
+          <span class="libelle">Code</span>
+        </div>
+        <span class="trait" [class.faite]="etape() > 2"></span>
+        <div class="etape" [class.active]="etape() >= 3">
+          <span class="rond">3</span>
+          <span class="libelle">Mot de passe</span>
+        </div>
+      </div>
+
+      <!-- ========== ÉTAPE 1 — IDENTIFICATION ========== -->
+      @if (etape() === 1) {
+        <div class="bloc">
+          <h2 class="bloc-titre">1. Identifiez-vous</h2>
+          <p class="bloc-sous-titre">Saisissez l'email ou le numéro associé à votre compte.</p>
+
+          <div class="champ">
+            <label class="etiquette" for="identifiant">Email ou téléphone</label>
+            <div class="login-input-group">
+              <input
+                id="identifiant"
+                type="text"
+                name="identifiant"
+                placeholder="07 08 12 34 56"
+                autocomplete="username"
+                [(ngModel)]="identifiant"
+              />
+              <span class="input-icon"><i class="bi bi-person-fill"></i></span>
+            </div>
+          </div>
+
+          <label class="etiquette">Recevoir le code par</label>
+          <div class="canaux">
+            <button type="button" class="canal" [class.choisi]="canal() === 'sms'"
+                    (click)="choisirCanal('sms')">
+              <span class="canal-nom">SMS</span>
+              <span class="canal-valeur">{{ apercuSms() }}</span>
+            </button>
+            <button type="button" class="canal" [class.choisi]="canal() === 'email'"
+                    (click)="choisirCanal('email')">
+              <span class="canal-nom">Email</span>
+              <span class="canal-valeur">{{ apercuEmail() }}</span>
+            </button>
+          </div>
+
+          @if (erreur()) {
+            <div class="alerte" role="alert">
+              <i class="bi bi-exclamation-circle-fill"></i><span>{{ erreur() }}</span>
+            </div>
+          }
+
+          <button type="button" class="btn btn-principal" (click)="envoyerLeCode()">
+            Envoyer le code
+          </button>
+        </div>
+      }
+
+      <!-- ========== ÉTAPE 2 — CODE DE VÉRIFICATION ========== -->
+      @if (etape() === 2) {
+        <div class="bloc">
+          <h2 class="bloc-titre">2. Code de vérification</h2>
+          <p class="bloc-sous-titre">Code à 6 chiffres, valable 10 minutes.</p>
+
+          <div class="code" (paste)="collerCode($event)">
+            @for (chiffre of chiffres(); track $index) {
+              <input
+                class="case-chiffre"
+                [id]="'chiffre-' + $index"
+                type="text"
+                inputmode="numeric"
+                maxlength="1"
+                autocomplete="one-time-code"
+                [attr.aria-label]="'Chiffre ' + ($index + 1) + ' sur 6'"
+                [value]="chiffre"
+                (input)="saisirChiffre($index, $event)"
+                (keydown)="toucheChiffre($index, $event)"
+              />
+            }
+          </div>
+
+          <div class="info">
+            <b>Code envoyé au {{ destinationMasquee() }}</b>
+            @if (secondesRestantes() > 0) {
+              <span>Renvoyer un code dans {{ compteARebours() }} — {{ envois() }} envoi(s) sur 3 par heure.</span>
+            } @else if (peutRenvoyer()) {
+              <span>Vous pouvez demander un nouveau code.</span>
+            } @else {
+              <span>Limite de 3 envois par heure atteinte. Réessayez plus tard.</span>
+            }
+          </div>
+
+          @if (erreur()) {
+            <div class="alerte" role="alert">
+              <i class="bi bi-exclamation-circle-fill"></i><span>{{ erreur() }}</span>
+            </div>
+          }
+
+          <button type="button" class="btn btn-principal" (click)="validerLeCode()">
+            Vérifier le code
+          </button>
+
+          <div class="liens">
+            <button type="button" class="lien" (click)="retour()">Modifier mes informations</button>
+            <button type="button" class="lien" [disabled]="!peutRenvoyer()" (click)="renvoyerLeCode()">
+              Renvoyer le code
+            </button>
+          </div>
+        </div>
+      }
+
+      <!-- ========== ÉTAPE 3 — NOUVEAU MOT DE PASSE ========== -->
+      @if (etape() === 3) {
+        <div class="bloc">
+          <h2 class="bloc-titre">3. Nouveau mot de passe</h2>
+          <p class="bloc-sous-titre">Minimum 8 caractères, une majuscule et un chiffre.</p>
+
+          <div class="champ">
+            <label class="etiquette" for="nouveau">Nouveau mot de passe</label>
+            <div class="login-input-group">
+              <input
+                id="nouveau"
+                name="nouveau"
+                [type]="afficherMotDePasse ? 'text' : 'password'"
+                placeholder="Votre nouveau mot de passe"
+                autocomplete="new-password"
+                [ngModel]="motDePasse"
+                (ngModelChange)="surSaisieMotDePasse($event)"
+              />
+              <span class="input-icon" style="cursor:pointer"
+                    (click)="afficherMotDePasse = !afficherMotDePasse">
+                <i [class]="afficherMotDePasse ? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill'"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="champ">
+            <label class="etiquette" for="confirmation">Confirmer</label>
+            <div class="login-input-group">
+              <input
+                id="confirmation"
+                name="confirmation"
+                [type]="afficherMotDePasse ? 'text' : 'password'"
+                placeholder="Confirmez le mot de passe"
+                autocomplete="new-password"
+                [(ngModel)]="confirmation"
+              />
+              <span class="input-icon"><i class="bi bi-lock-fill"></i></span>
+            </div>
+          </div>
+
+          @if (robustesse() > 0) {
+            <div class="jauge">
+              <div class="jauge-fond">
+                <i [style.width.%]="robustesse()"
+                   [class.moyen]="robustesse() < 85"
+                   [class.faible]="robustesse() < 55"></i>
+              </div>
+              <span class="jauge-texte"
+                    [class.moyen]="robustesse() < 85"
+                    [class.faible]="robustesse() < 55">{{ libelleRobustesse() }}</span>
+            </div>
+          }
+
+          @if (erreur()) {
+            <div class="alerte" role="alert">
+              <i class="bi bi-exclamation-circle-fill"></i><span>{{ erreur() }}</span>
+            </div>
+          }
+
+          <button type="button" class="btn btn-principal" (click)="enregistrer()">
+            Enregistrer et se connecter
+          </button>
+
+          <div class="liens">
+            <button type="button" class="lien" (click)="retour()">Revenir au code</button>
+          </div>
+        </div>
+      }
+
+      <!-- RÈGLE DE SÉCURITÉ -->
+      <div class="securite">
+        <i class="bi bi-shield-lock-fill"></i>
+        <div>
+          <b>Règle de sécurité appliquée</b>
+          Toutes les sessions ouvertes sont fermées après une réinitialisation, et une notification
+          est envoyée sur les deux canaux (SMS et email) même si un seul a servi à recevoir le code.
+        </div>
+      </div>
+
+      <div class="text-center mt-4 mdp-pied">
+        <span>Vous vous souvenez de votre mot de passe ? </span>
+        <a routerLink="/auth/login" class="lien-retour">Se connecter</a>
+      </div>
+
+      <div class="text-center mt-4 pt-2">
+        <p class="copyright-text mb-0">© 2026 Structure Ivoire Educ Elite</p>
+      </div>
+
+    </div>
+  </div>
+</section>

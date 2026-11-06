@@ -1,0 +1,368 @@
+:host {
+  display: block;
+  color: #0f2544;
+}
+
+/* ===== En-tête ===== */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  color: #f6821f;
+  margin-bottom: 9px;
+}
+
+.eyebrow::before {
+  content: '';
+  width: 17px;
+  height: 2px;
+  background: #f6821f;
+}
+
+.entete {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 22px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+h1 {
+  margin: 0 0 5px;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.chapeau {
+  margin: 0;
+  font-size: 0.86rem;
+  color: #5a6b80;
+  max-width: 46rem;
+}
+
+/* ===== Indicateurs ===== */
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.kpi {
+  background: #ffffff;
+  border: 1px solid #e6e2da;
+  border-left: 4px solid #1b3f6b;
+  border-radius: 11px;
+  padding: 15px 18px;
+  min-width: 0;
+}
+
+.kpi.orange { border-left-color: #f6821f; }
+.kpi.vert { border-left-color: #009e49; }
+.kpi.bleu { border-left-color: #2f6fd0; }
+
+.kpi-libelle {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  color: #7d8b9c;
+  margin-bottom: 7px;
+}
+
+.kpi-valeur {
+  display: block;
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+}
+
+.kpi-detail {
+  display: block;
+  margin-top: 7px;
+  font-size: 0.76rem;
+  color: #425468;
+}
+
+.kpi-detail.succes {
+  color: #15803d;
+}
+
+/* ===== Encart de rappel ===== */
+.encart {
+  background: #e5eefb;
+  border-radius: 10px;
+  padding: 13px 16px;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: #2c4a75;
+  margin-bottom: 20px;
+}
+
+.encart b {
+  display: block;
+  margin-bottom: 2px;
+  color: #15325c;
+}
+
+/* ===== Barre de l'historique ===== */
+.barre-historique {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 11px;
+}
+
+.barre-historique h2 {
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 700;
+}
+
+.outils {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.segments {
+  display: inline-flex;
+  gap: 3px;
+  background: #eceae4;
+  border-radius: 9px;
+  padding: 3px;
+}
+
+.segments button {
+  border: none;
+  background: transparent;
+  padding: 6px 15px;
+  border-radius: 7px;
+  font-size: 0.79rem;
+  font-weight: 600;
+  color: #425468;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.segments button:hover {
+  color: #0f2544;
+}
+
+.segments button.on {
+  background: #ffffff;
+  color: #0f2544;
+  box-shadow: 0 1px 3px rgba(15, 37, 68, 0.12);
+}
+
+/* ===== Tableau ===== */
+.carte {
+  background: #ffffff;
+  border: 1px solid #e6e2da;
+  border-radius: 11px;
+  min-width: 0;
+}
+
+.carte.pad0 {
+  padding: 0;
+  overflow: hidden;
+}
+
+.tableau-enveloppe {
+  overflow-x: auto;
+}
+
+.tableau {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+}
+
+.tableau th {
+  text-align: left;
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #7d8b9c;
+  font-weight: 700;
+  padding: 13px 20px;
+  background: #faf9f6;
+  border-bottom: 1px solid #e6e2da;
+  white-space: nowrap;
+}
+
+.tableau td {
+  padding: 14px 20px;
+  font-size: 0.83rem;
+  border-bottom: 1px solid #eef1f4;
+  vertical-align: middle;
+}
+
+.tableau tr:last-child td {
+  border-bottom: 0;
+}
+
+/* L'échéance ouverte se distingue du reste de l'historique. */
+.tableau tr.ouverte {
+  background: #fffaf4;
+}
+
+.droite {
+  text-align: right;
+}
+
+.mono {
+  font-family: "Cascadia Mono", Consolas, "SF Mono", Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.actions-col {
+  width: 1%;
+}
+
+.neant {
+  color: #9aa7b6;
+}
+
+/* ===== Pastilles de statut ===== */
+.statut {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.statut::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.statut.paye,
+.statut.paye-retard {
+  background: #e7f6ec;
+  color: #15803d;
+}
+
+.statut.a-regler {
+  background: #fdf3d7;
+  color: #96690b;
+}
+
+/* ===== Boutons ===== */
+.btn-principal,
+.btn-secondaire,
+.btn-action,
+.btn-payer {
+  border-radius: 9px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.btn-principal {
+  background: #f6821f;
+  border: none;
+  color: #ffffff;
+  font-size: 0.85rem;
+  padding: 0.65rem 1.15rem;
+  box-shadow: 0 5px 14px rgba(246, 130, 31, 0.3);
+}
+
+.btn-principal:hover {
+  background: #ff9329;
+  transform: translateY(-2px);
+}
+
+.btn-payer {
+  background: #f6821f;
+  border: none;
+  color: #ffffff;
+  font-size: 0.78rem;
+  padding: 0.42rem 1.05rem;
+}
+
+.btn-payer:hover {
+  background: #ff9329;
+}
+
+.btn-secondaire,
+.btn-action {
+  background: #ffffff;
+  border: 1px solid #dfe4ea;
+  color: #0f2544;
+}
+
+.btn-secondaire {
+  font-size: 0.8rem;
+  padding: 0.52rem 1rem;
+}
+
+.btn-action {
+  font-size: 0.78rem;
+  padding: 0.42rem 0.95rem;
+}
+
+.btn-secondaire:hover,
+.btn-action:hover {
+  border-color: #0c2340;
+  background: #f7f9fb;
+}
+
+/* ===== Messages ===== */
+.alerte {
+  border-radius: 9px;
+  padding: 0.7rem 1rem;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+
+.alerte.info {
+  background: #e5eefb;
+  border: 1px solid #c6d9f3;
+  color: #1b3f6b;
+}
+
+.vide {
+  margin: 0;
+  padding: 40px 20px;
+  text-align: center;
+  font-size: 0.84rem;
+  color: #7d8b9c;
+}
+
+/* ===== Petits écrans ===== */
+@media (max-width: 991.98px) {
+  .kpis { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 767.98px) {
+  h1 { font-size: 1.45rem; }
+  .barre-historique { align-items: stretch; }
+  .outils { justify-content: space-between; }
+}
+
+/* ===== Respect du réglage système « moins d'animations » ===== */
+@media (prefers-reduced-motion: reduce) {
+  .btn-principal, .btn-secondaire, .btn-action,
+  .btn-payer, .segments button { transition: none !important; }
+}

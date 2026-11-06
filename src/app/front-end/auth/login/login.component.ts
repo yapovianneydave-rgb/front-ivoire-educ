@@ -15,37 +15,37 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  identifiant: string = '';
+    email: string = '';
   password: string = '';
   showPassword:boolean = false;
 
-  private readonly IDENTIFIANT_VALIDE = '150503Y';
-  private readonly MOT_DE_PASSE_VALIDE = 'elite2024';
+  private readonly IDENTIFIANT_VALIDE = '150503Y@';
+  private readonly MOT_DE_PASSE_VALIDE = 'ivoire2026';
 
 
   constructor(private router: Router) {}
 
   onLogin(): void {
 
-    if (!this.identifiant || !this.password) {
+    if (!this.email || !this.password) {
       alert('Veuillez remplir tous les champs');
       return;
     }
 
 
-    if (this.identifiant !== this.IDENTIFIANT_VALIDE || this.password !== this.MOT_DE_PASSE_VALIDE) {
+    if (this.email !== this.IDENTIFIANT_VALIDE || this.password !== this.MOT_DE_PASSE_VALIDE) {
       alert('Identifiant ou mot de passe incorrect');
       return;
     }
 
-    console.log('✅ Connexion réussie:', this.identifiant);
+    console.log('✅ Connexion réussie:', this.email);
 
     localStorage.setItem('isLoggedIn', 'true');
-    localStorage.setItem('userId', this.identifiant);
+    localStorage.setItem('userId', this.email);
     localStorage.setItem('userName', 'Kouassi Jean');
 
 
-    this.router.navigate(['/home/Tableau-de-bord']);
+    this.router.navigate(['/parent/tableau-de-bord']);
   }
 
   togglePassword(): void {

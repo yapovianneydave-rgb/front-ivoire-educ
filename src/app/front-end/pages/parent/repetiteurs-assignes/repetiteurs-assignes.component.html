@@ -1,0 +1,160 @@
+<!-- ========== EN-TÊTE ========== -->
+<div class="eyebrow">Module 4 — Répétiteurs assignés</div>
+<h1>Mes répétiteurs</h1>
+<p class="chapeau">Fiche des répétiteurs affectés à vos enfants, créneaux programmés et suivi des passages.</p>
+
+@if (message()) {
+  <div class="alerte succes" role="status">{{ message() }}</div>
+}
+
+<!-- ========== FICHES ========== -->
+<div class="grille">
+  @for (repetiteur of repetiteurs(); track repetiteur.id) {
+    <article class="carte">
+
+      <header class="identite">
+        <span class="pastille" [style.background]="repetiteur.couleur">{{ repetiteur.initiales }}</span>
+        <div class="min">
+          <h2>{{ repetiteur.civiliteNom }}</h2>
+          <p class="matieres">{{ repetiteur.matieres.join(' · ') }}</p>
+          <p class="note">
+            <span class="etoiles" [attr.aria-label]="'Note ' + repetiteur.note + ' sur 5'">
+              @for (rang of etoiles; track rang) {
+                <i [class]="etoilePleine(repetiteur, rang) ? 'bi bi-star-fill' : 'bi bi-star'"></i>
+              }
+            </span>
+            <span class="avis">({{ repetiteur.nbAvis }} avis)</span>
+          </p>
+        </div>
+      </header>
+
+      <p class="bio">
+        {{ repetiteur.bio }} Élève suivi : <b>{{ repetiteur.eleveSuivi }}</b>.
+      </p>
+
+      <div class="infos">
+        <div>
+          <span class="info-titre">Créneau programmé</span>
+          <b class="info-valeur">{{ repetiteur.creneau }}</b>
+        </div>
+        <div>
+          <span class="info-titre">Contact</span>
+          <div class="contact">
+            <b class="info-valeur mono">{{ repetiteur.telephoneMasque }}</b>
+            <button type="button" class="btn-secondaire petit" (click)="appeler(repetiteur)">
+              <i class="bi bi-telephone"></i> Appeler via la plateforme
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <footer class="passage">
+        <div class="min">
+          <b>{{ repetiteur.derniereSeance.libelle }}</b>
+          <span class="sous">{{ repetiteur.derniereSeance.detail }}</span>
+        </div>
+        <div class="passage-actions">
+          <span class="pastille-statut" [class.confirme]="repetiteur.derniereSeance.statut === 'confirme'"
+                [class.attente]="repetiteur.derniereSeance.statut === 'attente'">
+            {{ libelleStatut(repetiteur.derniereSeance.statut) }}
+          </span>
+          <button type="button" class="btn-secondaire petit" (click)="ouvrirSignalement(repetiteur)">
+            {{ libelleAction(repetiteur.derniereSeance.statut) }}
+          </button>
+        </div>
+      </footer>
+
+    </article>
+  }
+</div>
+
+<div class="note-bas">
+  <i class="bi bi-shield-lock"></i>
+  <div>
+    <b>Pourquoi le numéro est masqué</b>
+    Les appels passent par la plateforme : le numéro réel du répétiteur n'est pas communiqué, et
+    le pointage des séances reste la seule preuve de passage.
+  </div>
+</div>
+
+<!-- ========== MODALE : APPEL RELAYÉ ========== -->
+@if (appelEnCours(); as repetiteur) {
+  <div class="voile" (click)="fermer()">
+    <div class="modale etroite" role="dialog" aria-modal="true" aria-labelledby="titre-appel"
+         (click)="$event.stopPropagation()">
+
+      <header class="modale-entete">
+        <h2 id="titre-appel">Appeler {{ repetiteur.civiliteNom }}</h2>
+        <button type="button" class="fermer" aria-label="Fermer" (click)="fermer()">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </header>
+
+      <div class="modale-corps">
+        <p class="texte">
+          La plateforme va vous mettre en relation. Vous recevrez un appel sur votre numéro,
+          puis la communication sera établie avec le répétiteur sans que vos numéros respectifs
+          soient échangés.
+        </p>
+        <div class="alerte info">
+          Appels possibles de 7h à 21h. Au-delà, utilisez le module « Demandes spéciales ».
+        </div>
+      </div>
+
+      <footer class="modale-pied">
+        <button type="button" class="btn-secondaire" (click)="fermer()">Annuler</button>
+        <button type="button" class="btn-principal" (click)="fermer()">Lancer l'appel</button>
+      </footer>
+    </div>
+  </div>
+}
+
+<!-- ========== MODALE : CONTESTATION / SIGNALEMENT ========== -->
+@if (signalement(); as courant) {
+  <div class="voile" (click)="fermer()">
+    <div class="modale" role="dialog" aria-modal="true" aria-labelledby="titre-signalement"
+         (click)="$event.stopPropagation()">
+
+      <header class="modale-entete">
+        <h2 id="titre-signalement">{{ titreSignalement(courant.type) }}</h2>
+        <button type="button" class="fermer" aria-label="Fermer" (click)="fermer()">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </header>
+
+      <div class="modale-corps">
+        <div class="rappel">
+          <b>{{ courant.repetiteur.derniereSeance.libelle }}</b>
+          <span class="sous">{{ courant.repetiteur.civiliteNom }} · {{ courant.repetiteur.eleveSuivi }}</span>
+          <span class="sous">{{ courant.repetiteur.derniereSeance.detail }}</span>
+        </div>
+
+        <div class="champ">
+          <label for="motif">
+            @if (courant.type === 'contestation') {
+              Que contestez-vous dans ce passage ?
+            } @else {
+              Que s'est-il passé lors de cette séance ?
+            }
+          </label>
+          <textarea id="motif" rows="4" name="motif" [(ngModel)]="motif"
+                    placeholder="Le cours n'a duré que 40 minutes, le répétiteur est reparti avant l'heure…"></textarea>
+        </div>
+
+        @if (erreurMotif()) {
+          <div class="alerte erreur" role="alert">{{ erreurMotif() }}</div>
+        }
+
+        <div class="alerte info">
+          Une demande de type « Réclamation » sera ouverte auprès de l'administration.
+          Délai de traitement cible : 24 h.
+        </div>
+      </div>
+
+      <footer class="modale-pied">
+        <button type="button" class="btn-secondaire" (click)="fermer()">Annuler</button>
+        <button type="button" class="btn-principal" (click)="envoyerSignalement()">Envoyer la demande</button>
+      </footer>
+    </div>
+  </div>
+}

@@ -1,0 +1,181 @@
+<!-- ========== EN-TÊTE ========== -->
+<div class="eyebrow">Module 2 — Informations personnelles</div>
+<h1>Mon profil</h1>
+<p class="chapeau">Coordonnées, préférences de notification et sécurité du compte.</p>
+
+<div class="colonnes">
+
+  <!-- ========== COORDONNÉES ========== -->
+  <section class="carte">
+    <div class="carte-entete">
+      <h2>Coordonnées</h2>
+      @if (modeEdition()) {
+        <span class="badge modif">Modification en cours</span>
+      } @else {
+        <span class="badge">Lecture seule</span>
+      }
+    </div>
+
+    <div class="grille">
+      <div class="champ">
+        <label for="nom">Nom</label>
+        <input id="nom" type="text" [value]="coordonnees().nom" [readOnly]="!modeEdition()"
+               (input)="majChamp('nom', $any($event.target).value)" />
+      </div>
+
+      <div class="champ">
+        <label for="prenoms">Prénom(s)</label>
+        <input id="prenoms" type="text" [value]="coordonnees().prenoms" [readOnly]="!modeEdition()"
+               (input)="majChamp('prenoms', $any($event.target).value)" />
+      </div>
+
+      <div class="champ">
+        <label for="telephone">Téléphone</label>
+        <input id="telephone" type="tel" [value]="coordonnees().telephone" [readOnly]="!modeEdition()"
+               (input)="majChamp('telephone', $any($event.target).value)" />
+      </div>
+
+      <div class="champ">
+        <label for="email">Email</label>
+        <input id="email" type="email" [value]="coordonnees().email" [readOnly]="!modeEdition()"
+               (input)="majChamp('email', $any($event.target).value)" />
+      </div>
+
+      <div class="champ">
+        <label for="ville">Ville</label>
+        <select id="ville" [value]="coordonnees().ville" [disabled]="!modeEdition()"
+                (change)="majChamp('ville', $any($event.target).value)">
+          @for (v of villes; track v) { <option [value]="v">{{ v }}</option> }
+        </select>
+      </div>
+
+      <div class="champ">
+        <label for="commune">Commune</label>
+        <select id="commune" [value]="coordonnees().commune" [disabled]="!modeEdition()"
+                (change)="majChamp('commune', $any($event.target).value)">
+          @for (c of communes; track c) { <option [value]="c">{{ c }}</option> }
+        </select>
+      </div>
+
+      <div class="champ large">
+        <label for="quartier">Quartier</label>
+        <input id="quartier" type="text" placeholder="ex. Angré, Riviera 3" [value]="coordonnees().quartier" [readOnly]="!modeEdition()"
+               (input)="majChamp('quartier', $any($event.target).value)" />
+      </div>
+    </div>
+
+    @if (erreurCoordonnees()) {
+      <div class="alerte erreur" role="alert">{{ erreurCoordonnees() }}</div>
+    }
+    @if (messageCoordonnees()) {
+      <div class="alerte succes" role="status">{{ messageCoordonnees() }}</div>
+    }
+    @if (modeEdition() && telephoneModifie()) {
+      <div class="alerte info">
+        Le numéro a changé : un code de vérification sera envoyé par SMS après enregistrement.
+      </div>
+    }
+
+    <div class="carte-pied">
+      <span class="note">Le changement de téléphone déclenche une vérification par SMS.</span>
+      @if (modeEdition()) {
+        <div class="actions">
+          <button type="button" class="btn-secondaire" (click)="annulerEdition()">Annuler</button>
+          <button type="button" class="btn-principal" (click)="enregistrerCoordonnees()">Enregistrer</button>
+        </div>
+      } @else {
+        <button type="button" class="btn-principal" (click)="activerEdition()">Modifier mes coordonnées</button>
+      }
+    </div>
+  </section>
+
+  <!-- ========== NOTIFICATIONS + SÉCURITÉ ========== -->
+  <div class="pile">
+
+    <section class="carte">
+      <h2>Préférences de notification</h2>
+      <p class="sous-titre">Par canal. Les alertes critiques restent toujours actives en in-app.</p>
+
+      <div class="tableau-enveloppe">
+        <table class="tableau">
+          <thead>
+            <tr>
+              <th>Canal</th>
+              <th class="centre">Rappels de cours</th>
+              <th class="centre">Paiement</th>
+              <th class="centre">Bilans</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (canal of canaux(); track canal.id) {
+              <tr>
+                <td>
+                  <b>{{ canal.libelle }}</b>
+                  @if (canal.mention) { <span class="mention">{{ canal.mention }}</span> }
+                </td>
+                <td class="centre">
+                  <button type="button" class="bascule" [class.on]="canal.rappels"
+                          [disabled]="canal.verrouille"
+                          [attr.aria-pressed]="canal.rappels"
+                          [attr.aria-label]="'Rappels de cours par ' + canal.libelle"
+                          (click)="basculer(canal, 'rappels')">{{ canal.rappels ? 'On' : 'Off' }}</button>
+                </td>
+                <td class="centre">
+                  <button type="button" class="bascule" [class.on]="canal.paiement"
+                          [disabled]="canal.verrouille"
+                          [attr.aria-pressed]="canal.paiement"
+                          [attr.aria-label]="'Alertes de paiement par ' + canal.libelle"
+                          (click)="basculer(canal, 'paiement')">{{ canal.paiement ? 'On' : 'Off' }}</button>
+                </td>
+                <td class="centre">
+                  <button type="button" class="bascule" [class.on]="canal.bilans"
+                          [disabled]="canal.verrouille"
+                          [attr.aria-pressed]="canal.bilans"
+                          [attr.aria-label]="'Bilans par ' + canal.libelle"
+                          (click)="basculer(canal, 'bilans')">{{ canal.bilans ? 'On' : 'Off' }}</button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="carte">
+      <h2>Sécurité</h2>
+
+      <div class="grille trois">
+        <div class="champ">
+          <label for="actuel">Mot de passe actuel</label>
+          <input id="actuel" type="password" autocomplete="current-password"
+                 placeholder="••••••••" [(ngModel)]="motDePasseActuel" name="actuel" />
+        </div>
+        <div class="champ">
+          <label for="nouveau">Nouveau</label>
+          <input id="nouveau" type="password" autocomplete="new-password"
+                 placeholder="••••••••" [(ngModel)]="nouveauMotDePasse" name="nouveau" />
+        </div>
+        <div class="champ">
+          <label for="confirmer">Confirmer <span class="requis">*</span></label>
+          <input id="confirmer" type="password" autocomplete="new-password"
+                 placeholder="••••••••" [(ngModel)]="confirmation" name="confirmer" />
+        </div>
+      </div>
+
+      @if (erreurMotDePasse()) {
+        <div class="alerte erreur" role="alert">{{ erreurMotDePasse() }}</div>
+      }
+      @if (messageMotDePasse()) {
+        <div class="alerte succes" role="status">{{ messageMotDePasse() }}</div>
+      }
+
+      <div class="carte-pied">
+        <span class="note">Minimum 8 caractères, une majuscule et un chiffre.</span>
+        <button type="button" class="btn-secondaire" (click)="modifierMotDePasse()">
+          Modifier le mot de passe
+        </button>
+      </div>
+    </section>
+
+  </div>
+</div>

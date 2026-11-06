@@ -1,0 +1,442 @@
+:host {
+  display: block;
+  color: #0f2544;
+}
+
+/* ===== En-tête ===== */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  color: #f6821f;
+  margin-bottom: 9px;
+}
+
+.eyebrow::before {
+  content: '';
+  width: 17px;
+  height: 2px;
+  background: #f6821f;
+}
+
+h1 {
+  margin: 0 0 5px;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.chapeau {
+  margin: 0 0 20px;
+  font-size: 0.86rem;
+  color: #5a6b80;
+  max-width: 44rem;
+}
+
+/* ===== Disposition ===== */
+.colonnes {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.pile {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.carte {
+  background: #ffffff;
+  border: 1px solid #e6e2da;
+  border-radius: 11px;
+  padding: 18px 20px;
+  min-width: 0;
+}
+
+.carte h2 {
+  margin: 0 0 3px;
+  font-size: 0.97rem;
+  font-weight: 700;
+}
+
+.sous-titre {
+  margin: 0 0 16px;
+  font-size: 0.76rem;
+  color: #7d8b9c;
+}
+
+.texte {
+  margin: 10px 0 0;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: #42536a;
+}
+
+/* ===== Moyens de paiement ===== */
+.moyens {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 11px;
+  margin-bottom: 18px;
+}
+
+.moyen {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  text-align: left;
+  background: #ffffff;
+  border: 1.5px solid #dfe4ea;
+  border-radius: 11px;
+  padding: 13px 15px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+}
+
+.moyen:hover:not(:disabled) {
+  border-color: #c3ccd8;
+  transform: translateY(-2px);
+}
+
+.moyen.choisi {
+  border-color: #f6821f;
+  background: #fffaf4;
+}
+
+/* Canal désactivé par l'administration : visible mais inerte. */
+.moyen.inactif {
+  cursor: not-allowed;
+  background: #faf9f6;
+  border-style: dashed;
+  opacity: 0.72;
+}
+
+.moyen:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(246, 130, 31, 0.3);
+}
+
+.moyen-haut {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.moyen-haut b {
+  font-size: 0.88rem;
+}
+
+.moyen-detail {
+  font-size: 0.75rem;
+  color: #7d8b9c;
+}
+
+.pastille {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.pastille::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.pastille.verte {
+  background: #e7f6ec;
+  color: #15803d;
+}
+
+.pastille.grise {
+  background: #eef0f3;
+  color: #5b6b7d;
+}
+
+/* ===== Champ ===== */
+.champ label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.champ input {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #dfe4ea;
+  border-radius: 9px;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.88rem;
+  color: #0f2544;
+  font-family: inherit;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.champ input:focus {
+  outline: none;
+  border-color: #f6821f;
+  box-shadow: 0 0 0 3px rgba(246, 130, 31, 0.14);
+}
+
+/* ===== Récapitulatif ===== */
+.recap {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0 16px;
+}
+
+.recap td {
+  padding: 10px 0;
+  font-size: 0.83rem;
+  border-bottom: 1px solid #eef1f4;
+  vertical-align: middle;
+}
+
+/* La ligne d'origine du tarif rappelle d'où vient le montant, sans le répéter fort. */
+.recap tr.attenue td {
+  color: #9aa7b6;
+  font-size: 0.76rem;
+  padding-top: 0;
+}
+
+.recap tr.total td {
+  border-bottom: 0;
+  padding-top: 13px;
+  font-size: 0.95rem;
+}
+
+.droite {
+  text-align: right;
+}
+
+.mono {
+  font-family: "Cascadia Mono", Consolas, "SF Mono", Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ===== Encadré vert ===== */
+.encadre-vert {
+  margin-top: 14px;
+  background: #e7f6ec;
+  border: 1px solid #bfe4cd;
+  border-radius: 10px;
+  padding: 12px 15px;
+  font-size: 0.79rem;
+  line-height: 1.55;
+  color: #14603a;
+}
+
+.encadre-vert b {
+  display: block;
+  margin-bottom: 2px;
+  color: #0d6b31;
+}
+
+/* ===== Boutons ===== */
+.btn-principal {
+  background: #f6821f;
+  border: none;
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 0.72rem 1.3rem;
+  border-radius: 9px;
+  cursor: pointer;
+  box-shadow: 0 5px 14px rgba(246, 130, 31, 0.3);
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.btn-principal.large {
+  width: 100%;
+}
+
+.btn-principal:hover {
+  background: #ff9329;
+  transform: translateY(-2px);
+}
+
+/* ===== Messages ===== */
+.alerte {
+  margin-top: 14px;
+  border-radius: 9px;
+  padding: 0.7rem 1rem;
+  font-size: 0.81rem;
+  line-height: 1.5;
+}
+
+.alerte.erreur {
+  background: #fdecea;
+  border: 1px solid #f6cfcb;
+  color: #b3261e;
+}
+
+/* ===== Écran de confirmation ===== */
+.confirmation {
+  max-width: 34rem;
+  text-align: center;
+  padding: 32px 28px;
+}
+
+.coche {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #e7f6ec;
+  color: #15803d;
+  font-size: 1.35rem;
+  margin-bottom: 14px;
+}
+
+.confirmation h2 {
+  margin: 0 0 9px;
+  font-size: 1.15rem;
+}
+
+.confirmation p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: #42536a;
+}
+
+.confirmation .encadre-vert {
+  text-align: left;
+  margin: 18px 0;
+}
+
+/* ===== Petits écrans ===== */
+@media (max-width: 1199.98px) {
+  .colonnes { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 767.98px) {
+  h1 { font-size: 1.45rem; }
+  .moyens { grid-template-columns: 1fr; }
+}
+
+/* ===== Respect du réglage système « moins d'animations » ===== */
+@media (prefers-reduced-motion: reduce) {
+  .moyen, .btn-principal, .champ input { transition: none !important; }
+}
+
+/* ===== Sélecteur de mois ===== */
+.selecteur-mois {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: #ffffff;
+  border: 1px solid #e6e2da;
+  border-radius: 11px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+
+.selecteur-mois label {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  color: #7d8b9c;
+}
+
+.selecteur-mois select {
+  flex: 1;
+  min-width: 15rem;
+  background: #ffffff;
+  border: 1px solid #dfe4ea;
+  border-radius: 9px;
+  padding: 0.55rem 0.85rem;
+  font-size: 0.85rem;
+  font-family: inherit;
+  color: #0f2544;
+  cursor: pointer;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.selecteur-mois select:focus {
+  outline: none;
+  border-color: #f6821f;
+  box-shadow: 0 0 0 3px rgba(246, 130, 31, 0.14);
+}
+
+.compteur {
+  font-size: 0.75rem;
+  color: #9aa7b6;
+}
+
+/* ===== Facture déjà réglée ===== */
+.facture-reglee {
+  max-width: 40rem;
+}
+
+.facture-entete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.facture-entete h2 {
+  margin: 0;
+}
+
+.facture-reglee .actions {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.btn-secondaire {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #ffffff;
+  border: 1px solid #dfe4ea;
+  color: #0f2544;
+  border-radius: 9px;
+  font-size: 0.83rem;
+  font-weight: 600;
+  padding: 0.6rem 1.1rem;
+  cursor: pointer;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.btn-secondaire:hover {
+  border-color: #0c2340;
+  background: #f7f9fb;
+}
+
+.alerte.info {
+  background: #e5eefb;
+  border: 1px solid #c6d9f3;
+  color: #1b3f6b;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .selecteur-mois select, .btn-secondaire { transition: none !important; }
+}

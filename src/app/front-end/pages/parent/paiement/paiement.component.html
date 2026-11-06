@@ -1,0 +1,115 @@
+<!-- ========== EN-TÊTE ========== -->
+<div class="eyebrow">Module 6 — Paiement</div>
+
+<div class="entete">
+  <div>
+    <h1>Suivi des paiements</h1>
+    <p class="chapeau">Rappel automatique une semaine avant l'échéance. Historique conservé sur 12 mois glissants.</p>
+  </div>
+  @if (echeanceEnCours()) {
+    <button type="button" class="btn-principal" (click)="regler(echeanceEnCours())">
+      Régler maintenant
+    </button>
+  }
+</div>
+
+@if (message()) {
+  <div class="alerte info" role="status">{{ message() }}</div>
+}
+
+<!-- ========== INDICATEURS ========== -->
+<div class="kpis">
+  <div class="kpi orange">
+    <span class="kpi-libelle">Solde du mois</span>
+    <strong class="kpi-valeur mono">{{ montantFormate(soldeDuMois()) }}</strong>
+    <span class="kpi-detail">
+      @if (echeanceEnCours(); as echeance) {
+        Échéance le {{ echeance.echeance }}
+      } @else {
+        Aucune échéance ouverte
+      }
+    </span>
+  </div>
+
+  <div class="kpi vert">
+    <span class="kpi-libelle">Statut</span>
+    <strong class="kpi-valeur">{{ aJour() ? 'À jour' : 'En retard' }}</strong>
+    <span class="kpi-detail succes">{{ libelleRegularisations() }}</span>
+  </div>
+
+  <div class="kpi bleu">
+    <span class="kpi-libelle">Prochain rappel</span>
+    <strong class="kpi-valeur">{{ prochainRappel() ?? "—" }}</strong>
+    <span class="kpi-detail">SMS + WhatsApp + in-app</span>
+  </div>
+</div>
+
+<!-- ========== RAPPEL À VENIR ========== -->
+<div class="encart">
+  <b>Rappel de paiement à venir</b>
+  @if (echeanceEnCours(); as echeance) {
+    Le prélèvement de {{ echeance.mois }} sera notifié le {{ prochainRappel() }}, une semaine avant
+    l'échéance du {{ echeance.echeance }}.
+  }
+</div>
+
+<!-- ========== HISTORIQUE ========== -->
+<div class="barre-historique">
+  <h2>Historique — 12 derniers mois</h2>
+  <div class="outils">
+    <div class="segments" role="group" aria-label="Filtrer par enfant">
+      <button type="button" [class.on]="filtreEnfant() === null" (click)="filtrer(null)">Tous</button>
+      @for (enfant of enfants; track enfant.id) {
+        <button type="button" [class.on]="filtreEnfant() === enfant.id" (click)="filtrer(enfant.id)">
+          {{ enfant.prenom }}
+        </button>
+      }
+    </div>
+    <button type="button" class="btn-secondaire" (click)="exporter()">Exporter (Excel)</button>
+  </div>
+</div>
+
+<section class="carte pad0">
+  @if (paiementsFiltres().length) {
+    <div class="tableau-enveloppe">
+      <table class="tableau">
+        <thead>
+          <tr>
+            <th>Mois</th>
+            <th>Élève / répétiteur</th>
+            <th class="droite">Montant</th>
+            <th>Statut</th>
+            <th>Moyen</th>
+            <th class="actions-col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (ligne of paiementsFiltres(); track ligne.id) {
+            <tr [class.ouverte]="ligne.statut === 'a-regler'">
+              <td>{{ ligne.mois }}</td>
+              <td>{{ ligne.eleve }} — {{ ligne.repetiteur }}</td>
+              <td class="droite mono">{{ montantFormate(ligne.montant) }}</td>
+              <td><span class="statut" [class]="ligne.statut">{{ libelleStatut(ligne) }}</span></td>
+              <td>
+                @if (ligne.moyen) {
+                  {{ ligne.moyen }}
+                } @else {
+                  <span class="neant">—</span>
+                }
+              </td>
+              <td>
+                @if (ligne.statut === 'a-regler') {
+                  <button type="button" class="btn-payer" (click)="regler(ligne)">Payer</button>
+                } @else {
+                  <button type="button" class="btn-action" (click)="telechargerRecu(ligne)">Reçu</button>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  } @else {
+    <p class="vide">Aucun paiement sur les 12 derniers mois pour cet enfant.</p>
+  }
+</section>

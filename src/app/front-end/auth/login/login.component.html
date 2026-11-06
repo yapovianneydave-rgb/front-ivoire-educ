@@ -13,10 +13,8 @@
         />
       </div>
 
-      <!-- MESSAGE -->
-      <p class="login-desc text-center mb-4">
-        Entrez votre identifiant et votre mot de passe pour accéder à votre application.
-      </p>
+
+
 
       <!-- SÉPARATEUR DE MARQUE -->
       <div class="login-separator">
@@ -30,11 +28,12 @@
         <div class="login-input-group mb-3">
           <input
             type="text"
-            placeholder="Identifiant"
-            [(ngModel)]="identifiant"
-            name="identifiant"
-            autocomplete="username"
+            placeholder="email"
+            [(ngModel)]="email"
+            name="email"
+            autocomplete="useremail"
             required
+            placeholder="Entrez votre email"
           />
           <span class="input-icon">
             <i class="bi bi-envelope-fill"></i>
@@ -50,10 +49,16 @@
             name="password"
             autocomplete="current-password"
             required
+            placeholder="Entrez votre mot de passe"
           />
           <span class="input-icon" (click)="togglePassword()" style="cursor: pointer;">
             <i [class]="showPassword ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
           </span>
+        </div>
+
+        <!-- Lien de récupération -->
+        <div class="text-end mb-4">
+          <a routerLink="/auth/mot-de-passe-oublie" class="link-register">Mot de passe oublié ?</a>
         </div>
 
         <!-- Bouton Connexion (Dégradé Orange) -->

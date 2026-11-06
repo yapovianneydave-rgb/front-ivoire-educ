@@ -1,0 +1,88 @@
+<!-- ========== EN-TÊTE ========== -->
+<div class="eyebrow">Module 1 — Tableau de bord</div>
+
+<div class="entete">
+  <div>
+    <h1>Bonjour, {{ prenomParent }}</h1>
+    <p class="chapeau">Voici un résumé de l'activité de {{ libelleEnfantAffiche() }} sur la plateforme.</p>
+  </div>
+  <button type="button" class="btn-principal">+ Nouvelle demande</button>
+</div>
+
+<!-- ========== SÉLECTEUR D'ENFANT ========== -->
+<div class="selecteur">
+  <div class="selecteur-gauche">
+    <span class="selecteur-titre">Enfant affiché</span>
+    <div class="segments" role="group" aria-label="Filtrer par enfant">
+      <button type="button" [class.on]="enfantAffiche() === null" (click)="choisirEnfant(null)">
+        Tous ({{ enfants.length }})
+      </button>
+      @for (enfant of enfants; track enfant.id) {
+        <button type="button" [class.on]="enfantAffiche() === enfant.id" (click)="choisirEnfant(enfant.id)">
+          {{ enfant.prenom }} — {{ enfant.classe }}
+        </button>
+      }
+    </div>
+  </div>
+  <span class="selecteur-note">Le filtre choisi s'applique à tous les écrans de votre espace.</span>
+</div>
+
+<!-- ========== INDICATEURS ========== -->
+<div class="kpis">
+  <div class="kpi bleu">
+    <span class="kpi-libelle">Dernier cours effectué</span>
+    <strong class="kpi-valeur">{{ dernierCours().date }}</strong>
+    <span class="kpi-detail">{{ dernierCours().detail }}</span>
+  </div>
+
+  <div class="kpi marine">
+    <span class="kpi-libelle">Prochain cours prévu</span>
+    <strong class="kpi-valeur">{{ prochainCours().date }}</strong>
+    <span class="kpi-detail">{{ prochainCours().detail }}</span>
+  </div>
+
+  <div class="kpi vert">
+    <span class="kpi-libelle">Solde de paiement</span>
+    <strong class="kpi-valeur">À jour</strong>
+    <span class="kpi-detail succes">Prochain prélèvement le 05/09</span>
+  </div>
+</div>
+
+<!-- ========== ACTIVITÉ + ACCÈS RAPIDE ========== -->
+<div class="colonnes">
+
+  <section class="carte activite">
+    <h2>Activité récente des séances</h2>
+    <p class="sous-titre">7 derniers jours</p>
+
+    @if (activiteFiltree().length) {
+      <ol class="fil">
+        @for (seance of activiteFiltree(); track $index) {
+          <li [class]="seance.couleur">
+            <b>{{ seance.titre }}</b>
+            <span>{{ seance.detail }}</span>
+          </li>
+        }
+      </ol>
+    } @else {
+      <p class="vide">Aucune séance sur les 7 derniers jours pour cet enfant.</p>
+    }
+  </section>
+
+  <section class="carte acces">
+    <h2>Accès rapide</h2>
+
+    <ul class="liens">
+      <li><span>Répétiteurs assignés</span><i class="bi bi-chevron-right"></i></li>
+      <li><span>Bilan pédagogique</span><i class="bi bi-chevron-right"></i></li>
+      <li><span>Paiement</span><i class="bi bi-chevron-right"></i></li>
+      <li><span>Demandes spéciales</span><i class="bi bi-chevron-right"></i></li>
+    </ul>
+
+    <div class="rappel">
+      <b>Notation à effectuer</b>
+      <span>Votre avis sur M. Kouassi Bertrand est attendu depuis 3 jours</span>
+    </div>
+  </section>
+
+</div>

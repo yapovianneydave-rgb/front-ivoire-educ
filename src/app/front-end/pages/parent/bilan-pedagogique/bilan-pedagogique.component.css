@@ -1,0 +1,374 @@
+:host {
+  display: block;
+  color: #0f2544;
+}
+
+/* ===== En-tête ===== */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  color: #f6821f;
+  margin-bottom: 9px;
+}
+
+.eyebrow::before {
+  content: '';
+  width: 17px;
+  height: 2px;
+  background: #f6821f;
+}
+
+.entete {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 22px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+h1 {
+  margin: 0 0 5px;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.chapeau {
+  margin: 0;
+  font-size: 0.86rem;
+  color: #5a6b80;
+}
+
+.titre-section {
+  margin: 20px 0 11px;
+  font-size: 1.02rem;
+  font-weight: 700;
+}
+
+/* ===== Cartes ===== */
+.carte {
+  background: #ffffff;
+  border: 1px solid #e6e2da;
+  border-radius: 11px;
+  padding: 18px 20px;
+  min-width: 0;
+}
+
+.carte.pad0 {
+  padding: 0;
+  overflow: hidden;
+}
+
+.fiche-entete {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.fiche-entete h2 {
+  margin: 0 0 3px;
+  font-size: 1.02rem;
+  font-weight: 700;
+}
+
+.meta {
+  margin: 0;
+  font-size: 0.76rem;
+  color: #7d8b9c;
+}
+
+.min {
+  min-width: 0;
+}
+
+/* ===== Pastille de statut ===== */
+.statut {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.statut::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.statut.atteint {
+  background: #e7f6ec;
+  color: #15803d;
+}
+
+.statut.en-progres {
+  background: #fdf3d7;
+  color: #96690b;
+}
+
+.statut.non-atteint {
+  background: #fdeae7;
+  color: #c0392b;
+}
+
+/* ===== Les deux encadrés ===== */
+.deux-colonnes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.encadre {
+  border: 1px solid #e6e2da;
+  border-radius: 10px;
+  padding: 15px 17px;
+  min-width: 0;
+}
+
+.encadre-titre {
+  display: block;
+  font-size: 0.84rem;
+  font-weight: 700;
+  margin-bottom: 7px;
+}
+
+.encadre-texte {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: #42536a;
+}
+
+/* ===== Jauge de couverture de l'objectif ===== */
+.jauge {
+  height: 7px;
+  border-radius: 99px;
+  background: #ece8df;
+  overflow: hidden;
+  margin: 13px 0 7px;
+}
+
+.jauge i {
+  display: block;
+  height: 100%;
+  border-radius: 99px;
+  background: #009e49;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Objectif partiellement couvert : on nuance la couleur. */
+.jauge i.partiel {
+  background: #4caf6d;
+}
+
+.jauge-pied {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.jauge-pied b {
+  font-size: 0.78rem;
+  color: #15803d;
+}
+
+.jauge-pied b.complet {
+  color: #0d6b31;
+}
+
+.source {
+  font-size: 0.72rem;
+  color: #9aa7b6;
+}
+
+/* ===== Fil des séances ===== */
+.fil {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 17px;
+  border-left: 2px solid #eef1f4;
+}
+
+.fil li {
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.fil li:last-child {
+  padding-bottom: 0;
+}
+
+.fil li::before {
+  content: '';
+  position: absolute;
+  left: -22px;
+  top: 5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #009e49;
+}
+
+.fil b {
+  display: block;
+  font-size: 0.83rem;
+  font-weight: 700;
+}
+
+.fil span {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.79rem;
+  color: #5a6b80;
+  line-height: 1.5;
+}
+
+/* ===== Historique ===== */
+.tableau-enveloppe {
+  overflow-x: auto;
+}
+
+.tableau {
+  width: 100%;
+  min-width: 680px;
+  border-collapse: collapse;
+}
+
+.tableau th {
+  text-align: left;
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #7d8b9c;
+  font-weight: 700;
+  padding: 13px 20px;
+  background: #faf9f6;
+  border-bottom: 1px solid #e6e2da;
+  white-space: nowrap;
+}
+
+.tableau td {
+  padding: 14px 20px;
+  font-size: 0.83rem;
+  border-bottom: 1px solid #eef1f4;
+  vertical-align: middle;
+}
+
+.tableau tbody tr {
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.tableau tbody tr:hover {
+  background: #faf9f6;
+}
+
+/* La ligne du bilan affiché en haut de page est repérée par un liseré. */
+.tableau tbody tr.selectionne {
+  background: #f4f8fd;
+  box-shadow: inset 3px 0 0 #f6821f;
+}
+
+.tableau tbody tr:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px #f6821f;
+}
+
+.tableau tr:last-child td {
+  border-bottom: 0;
+}
+
+.mono {
+  font-family: "Cascadia Mono", Consolas, "SF Mono", Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.actions-col {
+  width: 1%;
+}
+
+/* ===== Boutons ===== */
+.btn-secondaire,
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #ffffff;
+  border: 1px solid #dfe4ea;
+  color: #0f2544;
+  border-radius: 9px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.btn-secondaire {
+  font-size: 0.83rem;
+  padding: 0.6rem 1.1rem;
+}
+
+.btn-action {
+  font-size: 0.78rem;
+  padding: 0.42rem 0.9rem;
+}
+
+.btn-secondaire:hover,
+.btn-action:hover {
+  border-color: #0c2340;
+  background: #f7f9fb;
+}
+
+/* ===== Messages ===== */
+.alerte {
+  border-radius: 9px;
+  padding: 0.7rem 1rem;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+
+.alerte.info {
+  background: #e5eefb;
+  border: 1px solid #c6d9f3;
+  color: #1b3f6b;
+}
+
+.note-bas {
+  margin: 11px 0 0;
+  font-size: 0.75rem;
+  color: #9aa7b6;
+}
+
+/* ===== Petits écrans ===== */
+@media (max-width: 991.98px) {
+  .deux-colonnes { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 767.98px) {
+  h1 { font-size: 1.45rem; }
+  .entete { align-items: stretch; }
+}
+
+/* ===== Respect du réglage système « moins d'animations » ===== */
+@media (prefers-reduced-motion: reduce) {
+  .jauge i, .tableau tbody tr,
+  .btn-secondaire, .btn-action { transition: none !important; }
+}

@@ -1,0 +1,469 @@
+:host {
+  display: block;
+  color: #0f2544;
+}
+
+/* ===== En-tête ===== */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  color: #f6821f;
+  margin-bottom: 9px;
+}
+
+.eyebrow::before {
+  content: '';
+  width: 17px;
+  height: 2px;
+  background: #f6821f;
+}
+
+h1 {
+  margin: 0 0 5px;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.chapeau {
+  margin: 0 0 20px;
+  font-size: 0.86rem;
+  color: #5a6b80;
+  max-width: 34rem;
+}
+
+/* ===== Grille de fiches ===== */
+.grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(430px, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.carte {
+  background: #ffffff;
+  border: 1px solid #e6e2da;
+  border-radius: 11px;
+  padding: 18px 20px;
+  min-width: 0;
+}
+
+/* ===== Identité ===== */
+.identite {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.min {
+  min-width: 0;
+}
+
+.pastille {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.identite h2 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.matieres {
+  margin: 3px 0 5px;
+  font-size: 0.8rem;
+  color: #7d8b9c;
+}
+
+.note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.etoiles {
+  display: inline-flex;
+  gap: 2px;
+  color: #f6821f;
+  font-size: 0.82rem;
+}
+
+/* L'étoile vide garde la même couleur, en plus pâle, pour rester lisible. */
+.etoiles .bi-star {
+  color: #dcd7cc;
+}
+
+.avis {
+  font-size: 0.76rem;
+  color: #7d8b9c;
+}
+
+.bio {
+  margin: 0 0 15px;
+  font-size: 0.83rem;
+  line-height: 1.6;
+  color: #42536a;
+}
+
+/* ===== Créneau & contact ===== */
+.infos {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: 14px 18px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eef1f4;
+}
+
+.info-titre {
+  display: block;
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #7d8b9c;
+  margin-bottom: 5px;
+}
+
+.info-valeur {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.mono {
+  font-family: "Cascadia Mono", Consolas, "SF Mono", Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.contact {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ===== Dernier passage ===== */
+.passage {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding-top: 14px;
+}
+
+.passage b {
+  display: block;
+  font-size: 0.84rem;
+}
+
+.sous {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.76rem;
+  color: #7d8b9c;
+  line-height: 1.45;
+}
+
+.passage-actions {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+
+.pastille-statut {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-size: 0.73rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.pastille-statut::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.pastille-statut.confirme {
+  background: #e7f6ec;
+  color: #15803d;
+}
+
+.pastille-statut.attente {
+  background: #fdf3d7;
+  color: #96690b;
+}
+
+/* ===== Encart du bas ===== */
+.note-bas {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  margin-top: 16px;
+  background: #e5eefb;
+  border-radius: 10px;
+  padding: 13px 16px;
+  font-size: 0.79rem;
+  line-height: 1.55;
+  color: #2c4a75;
+}
+
+.note-bas i {
+  color: #1d4ed8;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.note-bas b {
+  display: block;
+  color: #15325c;
+  margin-bottom: 2px;
+}
+
+/* ===== Boutons ===== */
+.btn-principal,
+.btn-secondaire {
+  border-radius: 9px;
+  font-size: 0.83rem;
+  font-weight: 600;
+  padding: 0.6rem 1.1rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.btn-principal {
+  background: #0c2340;
+  border: 1px solid #0c2340;
+  color: #ffffff;
+}
+
+.btn-principal:hover {
+  background: #15355c;
+}
+
+.btn-secondaire {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #ffffff;
+  border: 1px solid #dfe4ea;
+  color: #0f2544;
+}
+
+.btn-secondaire:hover {
+  border-color: #0c2340;
+  background: #f7f9fb;
+}
+
+.btn-secondaire.petit {
+  font-size: 0.76rem;
+  padding: 0.42rem 0.8rem;
+}
+
+/* ===== Messages ===== */
+.alerte {
+  border-radius: 9px;
+  padding: 0.7rem 1rem;
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+.alerte.succes {
+  background: #e7f6ec;
+  border: 1px solid #bfe4cd;
+  color: #15803d;
+  margin-bottom: 16px;
+}
+
+.alerte.info {
+  background: #e5eefb;
+  border: 1px solid #c6d9f3;
+  color: #1b3f6b;
+}
+
+.alerte.erreur {
+  background: #fdecea;
+  border: 1px solid #f6cfcb;
+  color: #b3261e;
+}
+
+/* ===== Modale ===== */
+.voile {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(10, 22, 40, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  animation: fondu 0.2s ease both;
+}
+
+@keyframes fondu {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.modale {
+  background: #ffffff;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 560px;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 30px 70px -18px rgba(0, 0, 0, 0.5);
+  animation: monte 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.modale.etroite {
+  max-width: 460px;
+}
+
+@keyframes monte {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.modale-entete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  border-bottom: 1px solid #eef1f4;
+}
+
+.modale-entete h2 {
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 700;
+}
+
+.fermer {
+  background: transparent;
+  border: none;
+  color: #7d8b9c;
+  font-size: 0.9rem;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.fermer:hover {
+  background: #f2f4f7;
+  color: #0f2544;
+}
+
+.modale-corps {
+  padding: 18px 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.modale-pied {
+  display: flex;
+  justify-content: flex-end;
+  gap: 9px;
+  padding: 14px 20px;
+  border-top: 1px solid #eef1f4;
+}
+
+.texte {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.6;
+  color: #42536a;
+}
+
+.rappel {
+  background: #faf9f6;
+  border-radius: 9px;
+  padding: 12px 14px;
+}
+
+.rappel b {
+  font-size: 0.84rem;
+}
+
+/* ===== Champ de saisie ===== */
+.champ label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.champ textarea {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #dfe4ea;
+  border-radius: 9px;
+  padding: 0.62rem 0.85rem;
+  font-size: 0.85rem;
+  font-family: inherit;
+  color: #0f2544;
+  resize: vertical;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.champ textarea:focus {
+  outline: none;
+  border-color: #f6821f;
+  box-shadow: 0 0 0 3px rgba(246, 130, 31, 0.14);
+}
+
+.champ textarea::placeholder {
+  color: #9aa7b6;
+}
+
+/* ===== Petits écrans ===== */
+@media (max-width: 767.98px) {
+  h1 { font-size: 1.45rem; }
+  .grille { grid-template-columns: 1fr; }
+  .infos { grid-template-columns: 1fr; }
+  .passage { align-items: flex-start; }
+  .modale-pied { flex-direction: column-reverse; }
+  .modale-pied button { width: 100%; justify-content: center; }
+}
+
+/* La grille auto-fit garde une largeur mini qui déborderait sous 470px. */
+@media (max-width: 469.98px) {
+  .grille { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ===== Respect du réglage système « moins d'animations » ===== */
+@media (prefers-reduced-motion: reduce) {
+  .voile, .modale { animation: none !important; }
+  .btn-principal, .btn-secondaire, .fermer, .champ textarea { transition: none !important; }
+}

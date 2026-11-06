@@ -1,0 +1,108 @@
+<!-- ========== EN-TÊTE ========== -->
+<div class="eyebrow">Module 5 — Bilan pédagogique</div>
+
+<div class="entete">
+  <div>
+    <h1>Bilans bimensuels</h1>
+    <p class="chapeau">Rapports rédigés toutes les deux semaines par le répétiteur, consultables par le parent.</p>
+  </div>
+  <button type="button" class="btn-secondaire" (click)="exporter(bilanAffiche())">
+    <i class="bi bi-download"></i> Exporter en PDF
+  </button>
+</div>
+
+@if (message()) {
+  <div class="alerte info" role="status">{{ message() }}</div>
+}
+
+<!-- ========== BILAN AFFICHÉ ========== -->
+@if (bilanAffiche(); as bilan) {
+  <section class="carte fiche">
+
+    <header class="fiche-entete">
+      <div class="min">
+        <h2>{{ bilan.eleve }} — {{ bilan.matiere }}</h2>
+        <p class="meta">{{ bilan.periode }} · par {{ bilan.repetiteur }} · {{ bilan.depose }}</p>
+      </div>
+      <span class="statut" [class]="bilan.statut">{{ libelleStatut(bilan.statut) }}</span>
+    </header>
+
+    <div class="deux-colonnes">
+
+      <div class="encadre">
+        <b class="encadre-titre">Objectif pédagogique de la période</b>
+        <p class="encadre-texte">{{ bilan.objectif }}</p>
+
+        <div class="jauge" role="img"
+             [attr.aria-label]="bilan.notionsMaitrisees + ' notions maîtrisées sur ' + bilan.notionsTotal">
+          <i [style.width.%]="pourcentage()" [class.partiel]="pourcentage() < 100"></i>
+        </div>
+
+        <div class="jauge-pied">
+          <b [class.complet]="pourcentage() === 100">
+            {{ bilan.notionsMaitrisees }} notions maîtrisées sur {{ bilan.notionsTotal }}
+          </b>
+          <span class="source">Coché séance par séance par le répétiteur</span>
+        </div>
+      </div>
+
+      <div class="encadre">
+        <b class="encadre-titre">Progression &amp; comportement</b>
+        <p class="encadre-texte">{{ bilan.progression }}</p>
+      </div>
+
+    </div>
+
+    <ol class="fil">
+      @for (seance of bilan.seances; track seance.date) {
+        <li>
+          <b>{{ seance.date }}</b>
+          <span>{{ seance.resume }}</span>
+        </li>
+      }
+    </ol>
+
+  </section>
+}
+
+<!-- ========== HISTORIQUE ========== -->
+<h2 class="titre-section">Historique des bilans</h2>
+
+<section class="carte pad0">
+  <div class="tableau-enveloppe">
+    <table class="tableau">
+      <thead>
+        <tr>
+          <th>Période</th>
+          <th>Élève</th>
+          <th>Matière</th>
+          <th>Statut</th>
+          <th class="actions-col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (bilan of bilans(); track bilan.id) {
+          <tr [class.selectionne]="bilan.id === bilanAfficheId()"
+              (click)="afficher(bilan)"
+              tabindex="0"
+              [attr.aria-current]="bilan.id === bilanAfficheId() ? 'true' : null"
+              (keydown.enter)="afficher(bilan)"
+              (keydown.space)="afficher(bilan); $event.preventDefault()">
+            <td class="mono">{{ bilan.periodeCourte }}</td>
+            <td>{{ bilan.eleve }}</td>
+            <td>{{ bilan.matiere }}</td>
+            <td><span class="statut" [class]="bilan.statut">{{ libelleStatut(bilan.statut) }}</span></td>
+            <td>
+              <button type="button" class="btn-action"
+                      (click)="exporter(bilan); $event.stopPropagation()">PDF</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<p class="note-bas">
+  Cliquez une ligne de l'historique pour afficher le bilan correspondant en haut de page.
+</p>

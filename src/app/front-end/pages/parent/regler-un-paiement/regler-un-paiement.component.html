@@ -1,0 +1,206 @@
+<!-- ========== EN-TÊTE ========== -->
+<div class="eyebrow">Module 7 — Règlement</div>
+<h1>{{ titre() }}</h1>
+<p class="chapeau">Choisissez un mois pour consulter sa facture. Les échéances encore ouvertes peuvent être réglées par Mobile Money ou virement, sans quitter la plateforme.</p>
+
+<!-- ========== CHOIX DU MOIS ========== -->
+<div class="selecteur-mois">
+  <label for="mois">Mois à consulter</label>
+  <select id="mois" [value]="echeanceChoisieId()"
+          (change)="choisirEcheance($any($event.target).value)">
+    @for (ligne of echeances(); track ligne.id) {
+      <option [value]="ligne.id">{{ optionMois(ligne) }}</option>
+    }
+  </select>
+  <span class="compteur">{{ echeances().length }} mois glissants</span>
+</div>
+
+@if (message()) {
+  <div class="alerte info" role="status">{{ message() }}</div>
+}
+
+<!-- ========== APRÈS CONFIRMATION ========== -->
+@if (confirme()) {
+
+  <section class="carte confirmation">
+    <span class="coche"><i class="bi bi-check-lg"></i></span>
+    <h2>Demande envoyée à {{ moyenChoisi().libelle }}</h2>
+
+    @if (moyenChoisi().delai === 'immediat') {
+      <p>
+        Une demande de confirmation de <b>{{ montantFormate(total()) }}</b> vient d'être envoyée
+        au {{ numero }}. Validez-la sur votre téléphone : le statut passera à « Payé »
+        dès l'accord de l'opérateur.
+      </p>
+    } @else {
+      <p>
+        Votre virement de <b>{{ montantFormate(total()) }}</b> sera rapproché sous 48 h.
+        Le statut restera « À régler » jusqu'à la validation par l'administration.
+      </p>
+    }
+
+    <div class="encadre-vert">
+      <b>Reçu automatique</b>
+      Un reçu PDF est envoyé par WhatsApp et déposé dans l'historique des paiements.
+    </div>
+
+    <button type="button" class="btn-principal" (click)="retourSuivi()">
+      Revenir au suivi des paiements
+    </button>
+  </section>
+
+} @else if (!reglable()) {
+
+  <!-- ========== FACTURE DÉJÀ RÉGLÉE ========== -->
+  <section class="carte facture-reglee">
+    <div class="facture-entete">
+      <h2>Facture de {{ echeance().mois }}</h2>
+      <span class="pastille verte">{{ libelleStatut(echeance()) }}</span>
+    </div>
+
+    <table class="recap">
+      <tbody>
+        <tr>
+          <td>Mensualité {{ echeance().mois.toLowerCase() }} — {{ echeance().eleve }}</td>
+          <td class="mono droite">{{ montantFormate(echeance().montant) }}</td>
+        </tr>
+        <tr class="attenue">
+          <td>{{ echeance().classe }} · {{ echeance().matiere }} · tarif grille</td>
+          <td class="mono droite">{{ montantFormate(echeance().montant) }}</td>
+        </tr>
+        <tr>
+          <td>Échéance</td>
+          <td class="mono droite">{{ echeance().echeance }}</td>
+        </tr>
+        <tr>
+          <td>Réglé par</td>
+          <td class="droite">{{ echeance().moyen }}</td>
+        </tr>
+        <tr class="total">
+          <td><b>Montant réglé</b></td>
+          <td class="mono droite"><b>{{ montantFormate(echeance().montant) }}</b></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="alerte info">
+      Cette échéance est soldée. Choisissez un autre mois dans la liste pour consulter
+      une autre facture.
+    </div>
+
+    <div class="actions">
+      <button type="button" class="btn-secondaire" (click)="telechargerRecu()">
+        <i class="bi bi-download"></i> Télécharger le reçu
+      </button>
+      <button type="button" class="btn-secondaire" (click)="retourSuivi()">
+        Revenir au suivi
+      </button>
+    </div>
+  </section>
+
+} @else {
+
+<div class="colonnes">
+
+  <!-- ===== 1. MOYEN DE PAIEMENT ===== -->
+  <section class="carte">
+    <h2>1. Choisir le moyen de paiement</h2>
+    <p class="sous-titre">Les frais de transaction sont affichés avant confirmation.</p>
+
+    <div class="moyens" role="radiogroup" aria-label="Moyen de paiement">
+      @for (moyen of moyens; track moyen.id) {
+        <button type="button" class="moyen"
+                [class.choisi]="moyen.id === moyenChoisiId()"
+                [class.inactif]="!moyen.actif"
+                [disabled]="!moyen.actif"
+                role="radio"
+                [attr.aria-checked]="moyen.id === moyenChoisiId()"
+                (click)="choisir(moyen)">
+          <span class="moyen-haut">
+            <b>{{ moyen.libelle }}</b>
+            @if (moyen.id === moyenChoisiId() && moyen.actif) {
+              <span class="pastille verte">Sélectionné</span>
+            }
+            @if (!moyen.actif) {
+              <span class="pastille grise">Indisponible</span>
+            }
+          </span>
+          <span class="moyen-detail">{{ detailMoyen(moyen) }}</span>
+        </button>
+      }
+    </div>
+
+    <div class="champ">
+      <label for="numero">
+        @if (moyenChoisi().tauxFrais === 0) { Numéro de contact } @else { Numéro à débiter }
+      </label>
+      <input id="numero" type="tel" name="numero" [(ngModel)]="numero" />
+    </div>
+
+    @if (erreur()) {
+      <div class="alerte erreur" role="alert">{{ erreur() }}</div>
+    }
+  </section>
+
+  <!-- ===== 2 & 3. RÉCAPITULATIF ET VALIDATION ===== -->
+  <div class="pile">
+
+    <section class="carte">
+      <h2>2. Récapitulatif</h2>
+
+      <table class="recap">
+        <tbody>
+          <tr>
+            <td>Mensualité {{ echeance().mois.toLowerCase() }} — {{ echeance().eleve }}</td>
+            <td class="mono droite">{{ montantFormate(echeance().montant) }}</td>
+          </tr>
+          <tr class="attenue">
+            <td>{{ echeance().classe }} · {{ echeance().matiere }} · tarif grille</td>
+            <td class="mono droite">{{ montantFormate(echeance().montant) }}</td>
+          </tr>
+          <tr>
+            <td>
+              @if (frais() > 0) {
+                Frais {{ moyenChoisi().libelle }} ({{ moyenChoisi().tauxFrais.toString().replace('.', ',') }} %)
+              } @else {
+                Frais {{ moyenChoisi().libelle }}
+              }
+            </td>
+            <td class="mono droite">{{ montantFormate(frais()) }}</td>
+          </tr>
+          <tr class="total">
+            <td><b>Total à débiter</b></td>
+            <td class="mono droite"><b>{{ montantFormate(total()) }}</b></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <button type="button" class="btn-principal large" (click)="confirmer()">
+        Confirmer et payer {{ montantFormate(total()) }}
+      </button>
+    </section>
+
+    <section class="carte">
+      <h2>3. Validation</h2>
+      @if (moyenChoisi().delai === 'immediat') {
+        <p class="texte">
+          Vous recevrez une demande de confirmation sur votre téléphone. Le statut passe à
+          « Payé » dès l'accord de l'opérateur.
+        </p>
+      } @else {
+        <p class="texte">
+          Le virement est rapproché manuellement par l'administration. Comptez 48 h avant que
+          le statut passe à « Payé ».
+        </p>
+      }
+
+      <div class="encadre-vert">
+        <b>Reçu automatique</b>
+        Un reçu PDF est envoyé par WhatsApp et déposé dans l'historique des paiements.
+      </div>
+    </section>
+
+  </div>
+</div>
+
+}

@@ -1,0 +1,332 @@
+:host {
+  display: block;
+  color: #0f2544;
+}
+
+/* ===== En-tête ===== */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  color: #f6821f;
+  margin-bottom: 9px;
+}
+
+.eyebrow::before {
+  content: '';
+  width: 17px;
+  height: 2px;
+  background: #f6821f;
+}
+
+h1 {
+  margin: 0 0 5px;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.chapeau {
+  margin: 0 0 20px;
+  font-size: 0.86rem;
+  color: #5a6b80;
+  max-width: 46rem;
+}
+
+/* ===== Disposition ===== */
+.colonnes {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.pile {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.carte {
+  background: #ffffff;
+  border: 1px solid #e6e2da;
+  border-radius: 11px;
+  padding: 18px 20px;
+  min-width: 0;
+}
+
+.carte.pad0 {
+  padding: 0;
+  overflow: hidden;
+}
+
+.carte h2 {
+  margin: 0 0 3px;
+  font-size: 0.97rem;
+  font-weight: 700;
+}
+
+.titre-section {
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 700;
+}
+
+.sous-titre {
+  margin: 0 0 16px;
+  font-size: 0.76rem;
+  color: #7d8b9c;
+}
+
+/* ===== Champs ===== */
+.champ {
+  margin-bottom: 14px;
+}
+
+.champ label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.requis {
+  color: #d64d3a;
+}
+
+.champ select,
+.champ textarea,
+.champ input[type="file"] {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #dfe4ea;
+  border-radius: 9px;
+  padding: 0.62rem 0.85rem;
+  font-size: 0.85rem;
+  font-family: inherit;
+  color: #0f2544;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.champ textarea {
+  line-height: 1.55;
+  resize: vertical;
+}
+
+.champ select:focus,
+.champ textarea:focus,
+.champ input[type="file"]:focus {
+  outline: none;
+  border-color: #f6821f;
+  box-shadow: 0 0 0 3px rgba(246, 130, 31, 0.14);
+}
+
+.champ textarea::placeholder {
+  color: #9aa7b6;
+}
+
+.aide,
+.fichier-choisi {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.73rem;
+}
+
+.aide {
+  color: #9aa7b6;
+}
+
+.fichier-choisi {
+  color: #15803d;
+  font-weight: 600;
+}
+
+/* ===== Bandeau du délai, lié au type choisi ===== */
+.delai {
+  background: #fdf3d7;
+  border: 1px solid #eedca2;
+  border-radius: 9px;
+  padding: 0.6rem 0.95rem;
+  font-size: 0.8rem;
+  color: #7a5406;
+  margin: -4px 0 16px;
+}
+
+.delai b {
+  color: #96690b;
+}
+
+/* ===== Tableau de suivi ===== */
+.tableau-enveloppe {
+  overflow-x: auto;
+}
+
+.tableau {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+}
+
+.tableau th {
+  text-align: left;
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #7d8b9c;
+  font-weight: 700;
+  padding: 12px 18px;
+  background: #faf9f6;
+  border-bottom: 1px solid #e6e2da;
+  white-space: nowrap;
+}
+
+.tableau td {
+  padding: 13px 18px;
+  font-size: 0.82rem;
+  border-bottom: 1px solid #eef1f4;
+  vertical-align: middle;
+}
+
+.tableau tr:last-child td {
+  border-bottom: 0;
+}
+
+.mono {
+  font-family: "Cascadia Mono", Consolas, "SF Mono", Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ===== Pastilles de statut ===== */
+.statut {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.statut::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.statut.en-cours {
+  background: #fdf3d7;
+  color: #96690b;
+}
+
+.statut.resolue {
+  background: #e7f6ec;
+  color: #15803d;
+}
+
+.statut.rejetee {
+  background: #fdeae7;
+  color: #c0392b;
+}
+
+/* Une demande ouverte au-delà de son délai cible passe en rouge. */
+.statut.en-cours.depasse {
+  background: #fdeae7;
+  color: #c0392b;
+}
+
+/* ===== Encarts ===== */
+.encart {
+  border-radius: 10px;
+  padding: 13px 16px;
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.encart b {
+  display: block;
+  margin-bottom: 3px;
+}
+
+.encart.rouge {
+  background: #fdeae7;
+  border: 1px solid #f6cfcb;
+  color: #9c2c1e;
+}
+
+.encart.rouge b {
+  color: #c0392b;
+}
+
+.encart.bleu {
+  background: #e5eefb;
+  border: 1px solid #c6d9f3;
+  color: #2c4a75;
+}
+
+.encart.bleu b {
+  color: #15325c;
+}
+
+/* ===== Messages ===== */
+.alerte {
+  border-radius: 9px;
+  padding: 0.7rem 1rem;
+  font-size: 0.81rem;
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+.alerte.erreur {
+  background: #fdecea;
+  border: 1px solid #f6cfcb;
+  color: #b3261e;
+}
+
+.alerte.succes {
+  background: #e7f6ec;
+  border: 1px solid #bfe4cd;
+  color: #15803d;
+}
+
+/* ===== Bouton ===== */
+.btn-principal {
+  background: #0c2340;
+  border: 1px solid #0c2340;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.68rem 1.3rem;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.btn-principal:hover {
+  background: #15355c;
+  transform: translateY(-1px);
+}
+
+/* ===== Petits écrans ===== */
+@media (max-width: 1199.98px) {
+  .colonnes { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 767.98px) {
+  h1 { font-size: 1.45rem; }
+  .btn-principal { width: 100%; }
+}
+
+/* ===== Respect du réglage système « moins d'animations » ===== */
+@media (prefers-reduced-motion: reduce) {
+  .champ select, .champ textarea, .champ input[type="file"],
+  .btn-principal { transition: none !important; }
+}

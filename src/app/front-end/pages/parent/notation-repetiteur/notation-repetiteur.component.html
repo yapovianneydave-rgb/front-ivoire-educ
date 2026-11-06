@@ -1,0 +1,161 @@
+<!-- ========== EN-TÊTE ========== -->
+<div class="eyebrow">Module 8 — Notation du répétiteur</div>
+<h1>Évaluer {{ repetiteur().civiliteNom }}</h1>
+<p class="chapeau">Notation par étoiles (1 à 5) sur des critères précis, à l'issue d'un cycle de séances.</p>
+
+<!-- ========== CHOIX DU RÉPÉTITEUR ========== -->
+<div class="selecteur">
+  <span class="selecteur-titre">Répétiteur à évaluer</span>
+  <div class="segments" role="group" aria-label="Choisir le répétiteur à évaluer">
+    @for (r of repetiteurs; track r.id) {
+      <button type="button" [class.on]="r.id === repetiteurChoisiId()" (click)="choisirRepetiteur(r.id)">
+        {{ r.civiliteNom }}
+        <span class="segment-sous">{{ r.eleve }}</span>
+      </button>
+    }
+  </div>
+</div>
+
+<div class="colonnes">
+
+  <!-- ========== FORMULAIRE ========== -->
+  <section class="carte">
+
+    @if (envoye()) {
+
+      <div class="confirmation">
+        <span class="coche"><i class="bi bi-check-lg"></i></span>
+        <h2>Évaluation envoyée</h2>
+        <p>
+          Votre notation de {{ repetiteur().civiliteNom }} a été enregistrée.
+          @if (scoreSaisi() !== null) {
+            Vous lui avez attribué <b>{{ scoreSaisi() }}/5</b> une fois la pondération appliquée.
+          }
+          Elle sera intégrée à sa moyenne, sans que votre nom lui soit communiqué.
+        </p>
+        <button type="button" class="btn-secondaire" (click)="recommencer()">
+          Modifier mon évaluation
+        </button>
+      </div>
+
+    } @else {
+
+      <p class="intro">
+        Chaque critère pèse différemment dans le score global, selon le barème défini
+        par l'administration.
+      </p>
+
+      <div class="tableau-enveloppe">
+        <table class="tableau">
+          <thead>
+            <tr>
+              <th>Critère</th>
+              <th>Poids</th>
+              <th class="droite">Votre note</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (critere of criteres; track critere.id) {
+              <tr>
+                <td>
+                  <b>{{ critere.libelle }}</b>
+                  <span class="sous">{{ critere.description }}</span>
+                </td>
+                <td>
+                  <span class="poids" [class.fort]="critere.poids >= 30">{{ critere.poids }} %</span>
+                </td>
+                <td class="droite">
+                  <div class="notation" role="radiogroup"
+                       [attr.aria-label]="'Note pour ' + critere.libelle">
+                    @for (rang of etoiles; track rang) {
+                      <button type="button" class="etoile"
+                              [class.pleine]="rang <= noteSaisie(critere)"
+                              role="radio"
+                              [attr.aria-checked]="rang === noteSaisie(critere)"
+                              [attr.aria-label]="rang + ' étoile' + (rang > 1 ? 's' : '')"
+                              (click)="noter(critere, rang)">
+                        <i [class]="rang <= noteSaisie(critere) ? 'bi bi-star-fill' : 'bi bi-star'"></i>
+                      </button>
+                    }
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Score pondéré de la saisie en cours -->
+      @if (scoreSaisi() !== null) {
+        <div class="score-saisi">
+          <span>Votre note, une fois le barème appliqué</span>
+          <b>{{ scoreSaisi() }}<span class="sur">/5</span></b>
+        </div>
+      }
+
+      <div class="champ">
+        <label for="commentaire">Commentaire</label>
+        <textarea id="commentaire" rows="3" name="commentaire" [(ngModel)]="commentaire"
+                  placeholder="Ce que vous avez observé sur la période…"></textarea>
+      </div>
+
+      <div class="champ">
+        <label for="recommandations">Recommandations pour la suite du programme</label>
+        <textarea id="recommandations" rows="2" name="recommandations" [(ngModel)]="recommandations"
+                  placeholder="Conseils pour les prochaines séances…"></textarea>
+      </div>
+
+      @if (erreur()) {
+        <div class="alerte erreur" role="alert">{{ erreur() }}</div>
+      }
+
+      <div class="pied">
+        <span class="note-pied">
+          Votre notation est anonyme vis-à-vis du répétiteur ; seule la moyenne lui est communiquée.
+        </span>
+        <button type="button" class="btn-principal" (click)="envoyer()">Envoyer l'évaluation</button>
+      </div>
+
+    }
+  </section>
+
+  <!-- ========== SCORE GLOBAL ========== -->
+  <aside class="carte">
+    <h2>Score global du répétiteur</h2>
+
+    <div class="score">
+      <b class="score-valeur">{{ scoreGlobal() }}<span class="sur">/5</span></b>
+      <div class="etoiles-globales" [attr.aria-label]="'Moyenne ' + scoreGlobal() + ' sur 5'">
+        @for (rang of etoiles; track rang) {
+          <i [class]="pleine(scoreGlobal(), rang) ? 'bi bi-star-fill' : 'bi bi-star'"></i>
+        }
+      </div>
+      <span class="score-base">Basé sur {{ repetiteur().nbAvis }} évaluations</span>
+    </div>
+
+    <div class="detail">
+      @for (critere of criteres; track critere.id) {
+        <div class="ligne-critere">
+          <div class="ligne-haut">
+            <span>{{ critere.libelle }} <span class="poids-inline">· {{ critere.poids }} %</span></span>
+            <b class="mono">{{ moyenne(critere).toFixed(1) }}</b>
+          </div>
+          <div class="barre"><i [style.width.%]="largeur(critere)"></i></div>
+        </div>
+      }
+    </div>
+
+    <p class="rappel">
+      Une notification de rappel est envoyée au parent après chaque cycle de
+      {{ cycleSeances }} séances afin de maintenir un score fiable et à jour.
+      @if (repetiteur().seancesDepuisNotation >= cycleSeances) {
+        <b class="du">Une évaluation est attendue pour ce répétiteur.</b>
+      } @else {
+        <span class="attente">
+          {{ cycleSeances - repetiteur().seancesDepuisNotation }} séance(s) avant la prochaine demande.
+        </span>
+      }
+    </p>
+  </aside>
+
+</div>

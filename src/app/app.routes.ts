@@ -1,47 +1,53 @@
 import { Routes } from '@angular/router';
 import {AuthLayoutComponent} from './front-end/layouts/auth-layout/auth-layout.component';
 import {LoginComponent} from './front-end/auth/login/login.component';
-import {DashboardComponent} from './front-end/pages/dashbord/dashboard.component';
 import {RegisterComponent} from './front-end/auth/register/register.component';
-import {MainLayoutsComponent} from './front-end/layouts/main-layouts/main-layouts.component';
+import {MotDePasseOublieComponent} from './front-end/auth/mot-de-passe-oublie/mot-de-passe-oublie.component';
+import {ParentLayoutComponent} from './front-end/layouts/parent-layout/parent-layout.component';
+import {TableauDeBordParentComponent} from './front-end/pages/parent/tableau-de-bord/tableau-de-bord.component';
+import {InformationsPersonnellesComponent} from './front-end/pages/parent/informations-personnelles/informations-personnelles.component';
+import {InformationsElevesComponent} from './front-end/pages/parent/informations-eleves/informations-eleves.component';
+import {RepetiteursAssignesComponent} from './front-end/pages/parent/repetiteurs-assignes/repetiteurs-assignes.component';
+import {BilanPedagogiqueComponent} from './front-end/pages/parent/bilan-pedagogique/bilan-pedagogique.component';
+import {PaiementComponent} from './front-end/pages/parent/paiement/paiement.component';
+import {ReglerUnPaiementComponent} from './front-end/pages/parent/regler-un-paiement/regler-un-paiement.component';
+import {NotationRepetiteurComponent} from './front-end/pages/parent/notation-repetiteur/notation-repetiteur.component';
+import {DemandesSpecialesComponent} from './front-end/pages/parent/demandes-speciales/demandes-speciales.component';
 
 
 export const routes: Routes = [
 
-
-
+  // ===== Authentification =====
   {
-    path:'',
-    component:AuthLayoutComponent,
-    children:[
-      {
-        path:'', redirectTo:'auth/login', pathMatch:'full'
-      },
-      {
-        path:'auth/login', component:LoginComponent
-      },
-      { path: "auth/register", component: RegisterComponent }
+    path: '',
+    component: AuthLayoutComponent,
+    children: [
+      { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
+      { path: 'auth/login', component: LoginComponent },
+      { path: 'auth/register', component: RegisterComponent },
+      { path: 'auth/mot-de-passe-oublie', component: MotDePasseOublieComponent }
     ]
   },
 
-
+  // ===== Espace Parent =====
   {
-   path:'',
-    component:MainLayoutsComponent,
-
-    children:[
-      {
-        path:'', redirectTo:'home/Tableau-de-bord', pathMatch:'full'
-      },
-      {
-        path:'home/Tableau-de-bord', component:DashboardComponent
-      },
-
+    path: 'parent',
+    component: ParentLayoutComponent,
+    children: [
+      { path: '', redirectTo: 'tableau-de-bord', pathMatch: 'full' },
+      { path: 'tableau-de-bord', component: TableauDeBordParentComponent },
+      { path: 'informations-personnelles', component: InformationsPersonnellesComponent },
+      { path: 'informations-eleves', component: InformationsElevesComponent },
+      { path: 'repetiteurs-assignes', component: RepetiteursAssignesComponent },
+      { path: 'bilan-pedagogique', component: BilanPedagogiqueComponent },
+      { path: 'paiement', component: PaiementComponent },
+      { path: 'regler-un-paiement', component: ReglerUnPaiementComponent },
+      { path: 'notation-repetiteur', component: NotationRepetiteurComponent },
+      { path: 'demandes-speciales', component: DemandesSpecialesComponent }
     ]
   },
 
-
-
-
+  // Toute URL inconnue renvoie à la connexion.
+  { path: '**', redirectTo: 'auth/login' }
 
 ];

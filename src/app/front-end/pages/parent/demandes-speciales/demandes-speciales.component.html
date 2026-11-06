@@ -1,0 +1,111 @@
+<!-- ========== EN-TÊTE ========== -->
+<div class="eyebrow">Module 9 — Demandes spéciales</div>
+<h1>Contacter l'administration</h1>
+<p class="chapeau">Espace de requête directe : changement de répétiteur, ajout de matière, réajustement de planning ou réclamation.</p>
+
+<div class="colonnes">
+
+  <!-- ========== NOUVELLE DEMANDE ========== -->
+  <section class="carte">
+    <h2>Nouvelle demande</h2>
+    <p class="sous-titre">Le délai de traitement dépend du type choisi.</p>
+
+    <div class="champ">
+      <label for="type">Type de demande <span class="requis">*</span></label>
+      <select id="type" [value]="typeChoisiId()" (change)="changerType($any($event.target).value)">
+        @for (type of types; track type.id) {
+          <option [value]="type.id">{{ type.libelle }}</option>
+        }
+      </select>
+    </div>
+
+    <!-- Le délai se met à jour avec le type, il n'est plus uniforme -->
+    <div class="delai">
+      Délai cible : <b>{{ typeChoisi().delaiHeures }} h</b> · équipe {{ typeChoisi().equipe }}
+    </div>
+
+    <div class="champ">
+      <label for="eleve">Élève concerné <span class="requis">*</span></label>
+      <select id="eleve" name="eleve" [(ngModel)]="eleveChoisi">
+        @for (eleve of eleves; track eleve) {
+          <option [value]="eleve">{{ eleve }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="champ">
+      <label for="message">Message <span class="requis">*</span></label>
+      <textarea id="message" rows="5" name="message" [(ngModel)]="message"
+                placeholder="Décrivez votre demande en détail…"></textarea>
+    </div>
+
+    <div class="champ">
+      <label for="fichier">Pièce jointe</label>
+      <input id="fichier" type="file" accept=".pdf,image/*" (change)="surFichier($event)" />
+      @if (pieceJointe(); as nom) {
+        <span class="fichier-choisi"><i class="bi bi-paperclip"></i> {{ nom }}</span>
+      } @else {
+        <span class="aide">Bulletin, capture d'écran, justificatif — PDF ou image, 5 Mo max.</span>
+      }
+    </div>
+
+    @if (erreur()) {
+      <div class="alerte erreur" role="alert">{{ erreur() }}</div>
+    }
+    @if (confirmation()) {
+      <div class="alerte succes" role="status">{{ confirmation() }}</div>
+    }
+
+    <button type="button" class="btn-principal" (click)="envoyer()">Envoyer la demande</button>
+  </section>
+
+  <!-- ========== SUIVI ========== -->
+  <div class="pile">
+
+    <h2 class="titre-section">Mes demandes en cours</h2>
+
+    <section class="carte pad0">
+      <div class="tableau-enveloppe">
+        <table class="tableau">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Élève</th>
+              <th>Date</th>
+              <th>Délai cible</th>
+              <th>Statut</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (demande of demandes(); track demande.id) {
+              <tr>
+                <td>{{ demande.type }}</td>
+                <td>{{ demande.eleve }}</td>
+                <td class="mono">{{ demande.date }}</td>
+                <td class="mono">{{ demande.delaiHeures }} h</td>
+                <td>
+                  <span class="statut" [class]="demande.statut" [class.depasse]="horsDelai(demande)">
+                    {{ libelleStatut(demande) }}
+                  </span>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    @if (derniereRejetee(); as rejetee) {
+      <div class="encart rouge">
+        <b>Demande rejetée — motif communiqué</b>
+        {{ rejetee.motifRejet }}
+      </div>
+    }
+
+    <div class="encart bleu">
+      <b>Délais par type de demande</b>
+      {{ resumeDelais() }}. Ces délais sont ceux fixés par l'administration.
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,355 @@
+:host {
+  display: block;
+  color: #0f2544;
+}
+
+/* ===== En-tête ===== */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  color: #f6821f;
+  margin-bottom: 9px;
+}
+
+.eyebrow::before {
+  content: '';
+  width: 17px;
+  height: 2px;
+  background: #f6821f;
+}
+
+h1 {
+  margin: 0 0 5px;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.chapeau {
+  margin: 0 0 20px;
+  font-size: 0.86rem;
+  color: #5a6b80;
+}
+
+/* ===== Disposition ===== */
+.colonnes {
+  display: grid;
+  grid-template-columns: 1fr 1.18fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.pile {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.carte {
+  background: #ffffff;
+  border: 1px solid #e6e2da;
+  border-radius: 11px;
+  padding: 18px 20px;
+  min-width: 0;
+}
+
+.carte-entete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.carte h2 {
+  margin: 0;
+  font-size: 0.97rem;
+  font-weight: 700;
+}
+
+.sous-titre {
+  margin: 3px 0 16px;
+  font-size: 0.76rem;
+  color: #7d8b9c;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: #eef0f3;
+  color: #5b6b7d;
+  white-space: nowrap;
+}
+
+.badge::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.badge.modif {
+  background: #fdf3d7;
+  color: #96690b;
+}
+
+/* ===== Champs ===== */
+.grille {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 18px;
+}
+
+.grille.trois {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.champ {
+  min-width: 0;
+}
+
+.champ label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #0f2544;
+}
+
+.requis {
+  color: #d64d3a;
+}
+
+.champ input,
+.champ select {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #dfe4ea;
+  border-radius: 9px;
+  padding: 0.62rem 0.85rem;
+  font-size: 0.87rem;
+  color: #0f2544;
+  font-family: inherit;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.champ input:focus,
+.champ select:focus {
+  outline: none;
+  border-color: #f6821f;
+  box-shadow: 0 0 0 3px rgba(246, 130, 31, 0.14);
+}
+
+/* Lecture seule : le champ reste lisible mais clairement inerte. */
+.champ input[readonly],
+.champ select:disabled {
+  background: #f7f8fa;
+  color: #42536a;
+  cursor: default;
+}
+
+.champ input::placeholder {
+  color: #9aa7b6;
+}
+
+/* ===== Pied de carte ===== */
+.carte-pied {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  border-top: 1px solid #eef1f4;
+  margin-top: 18px;
+  padding-top: 15px;
+}
+
+.note {
+  font-size: 0.76rem;
+  color: #7d8b9c;
+}
+
+.actions {
+  display: flex;
+  gap: 9px;
+}
+
+/* ===== Boutons ===== */
+.btn-principal,
+.btn-secondaire {
+  border-radius: 9px;
+  font-size: 0.83rem;
+  font-weight: 600;
+  padding: 0.6rem 1.1rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.btn-principal {
+  background: #0c2340;
+  border: 1px solid #0c2340;
+  color: #ffffff;
+}
+
+.btn-principal:hover {
+  background: #15355c;
+  transform: translateY(-1px);
+}
+
+.btn-secondaire {
+  background: #ffffff;
+  border: 1px solid #dfe4ea;
+  color: #0f2544;
+}
+
+.btn-secondaire:hover {
+  border-color: #0c2340;
+  background: #f7f9fb;
+}
+
+/* ===== Messages ===== */
+.alerte {
+  margin-top: 14px;
+  border-radius: 9px;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.alerte.erreur {
+  background: #fdecea;
+  border: 1px solid #f6cfcb;
+  color: #b3261e;
+}
+
+.alerte.succes {
+  background: #e7f6ec;
+  border: 1px solid #bfe4cd;
+  color: #15803d;
+}
+
+.alerte.info {
+  background: #e5eefb;
+  border: 1px solid #c6d9f3;
+  color: #1b3f6b;
+}
+
+/* ===== Tableau des notifications ===== */
+.tableau-enveloppe {
+  overflow-x: auto;
+  margin: 0 -20px;
+}
+
+.tableau {
+  width: 100%;
+  min-width: 420px;
+  border-collapse: collapse;
+}
+
+.tableau th {
+  text-align: left;
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #7d8b9c;
+  font-weight: 700;
+  padding: 11px 20px;
+  background: #faf9f6;
+  border-bottom: 1px solid #e6e2da;
+  white-space: nowrap;
+}
+
+.tableau td {
+  padding: 12px 20px;
+  font-size: 0.83rem;
+  border-bottom: 1px solid #eef1f4;
+  vertical-align: middle;
+}
+
+.tableau tr:last-child td {
+  border-bottom: 0;
+}
+
+.centre {
+  text-align: center;
+}
+
+.mention {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.7rem;
+  color: #9aa7b6;
+}
+
+/* ===== Bascules On / Off ===== */
+.bascule {
+  min-width: 52px;
+  border-radius: 999px;
+  padding: 4px 13px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: #eef0f3;
+  border: 1px solid transparent;
+  color: #5b6b7d;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.bascule.on {
+  background: #e7f6ec;
+  color: #15803d;
+}
+
+.bascule:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: #c9d6e6;
+}
+
+/* Canal verrouillé : l'état reste lisible, l'action non. */
+.bascule:disabled {
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+.bascule:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(246, 130, 31, 0.3);
+}
+
+/* ===== Petits écrans ===== */
+@media (max-width: 1199.98px) {
+  .colonnes { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 767.98px) {
+  .grille,
+  .grille.trois { grid-template-columns: 1fr; }
+  h1 { font-size: 1.45rem; }
+  .carte-pied { align-items: stretch; }
+  .actions { flex: 1; }
+  .actions button { flex: 1; }
+}
+
+/* ===== Respect du réglage système « moins d'animations » ===== */
+@media (prefers-reduced-motion: reduce) {
+  .btn-principal, .btn-secondaire, .bascule,
+  .champ input, .champ select { transition: none !important; }
+}
+
+/* Le quartier est une saisie libre : il prend toute la largeur de la grille. */
+.champ.large {
+  grid-column: 1 / -1;
+}

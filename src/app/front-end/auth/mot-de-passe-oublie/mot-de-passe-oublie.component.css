@@ -1,0 +1,588 @@
+/* ===== Fond : même photo et même filtre que la page de connexion ===== */
+.mdp-page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+  padding: 40px 0;
+}
+
+.mdp-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('/assets/images/register-bg.jpg') center/cover no-repeat;
+  z-index: 0;
+}
+
+.mdp-page::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(8, 26, 16, 0.82), rgba(17, 22, 19, 0.88));
+  z-index: 1;
+}
+
+.overlay {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+/* ===== Carte sombre, identique à celle du login ===== */
+.mdp-card {
+  position: relative;
+  max-width: 560px;
+  background: #111613 !important;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.8),
+  0 0 0 1px rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+  box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+  border-color 0.6s ease;
+}
+
+.mdp-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(0, 158, 73, 0.3) !important;
+  box-shadow: 0 35px 80px -15px rgba(0, 0, 0, 0.95),
+  -15px 15px 40px -10px rgba(255, 130, 0, 0.15),
+  15px -15px 40px -10px rgba(0, 158, 73, 0.15);
+}
+
+/* Liseré bicolore en haut de la carte */
+.mdp-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(to right, #FF8200 50%, #009E49 50%);
+  z-index: 3;
+}
+
+/* Secousse à la saisie invalide */
+.mdp-card.secousse {
+  animation: secoue 0.55s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes secoue {
+  10%, 90% { transform: translateX(-3px); }
+  20%, 80% { transform: translateX(5px); }
+  30%, 50%, 70% { transform: translateX(-8px); }
+  40%, 60% { transform: translateX(8px); }
+}
+
+/* ===== En-tête ===== */
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 220px;
+  margin: 1rem auto 1.3rem;
+}
+
+.mdp-logo {
+  max-height: 58px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.mdp-card:hover .mdp-logo {
+  transform: scale(1.06);
+}
+
+.mdp-titre {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.6rem;
+}
+
+.mdp-intro {
+  color: #CBD5E1;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0 auto 1.8rem;
+  max-width: 26rem;
+}
+
+/* ===== Stepper ===== */
+.stepper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.9rem;
+}
+
+.stepper .etape {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
+  flex: 0 0 auto;
+}
+
+.stepper .rond {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stepper .libelle {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #94a3b8;
+  transition: color 0.3s ease;
+}
+
+.stepper .etape.active .rond {
+  background: #FF8200;
+  border-color: #FF8200;
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(255, 130, 0, 0.45);
+}
+
+.stepper .etape.active .libelle {
+  color: #FF8200;
+}
+
+/* L'étape franchie repasse en vert et se fige. */
+.stepper .etape.faite .rond {
+  background: #009E49;
+  border-color: #009E49;
+  color: #ffffff;
+  box-shadow: none;
+}
+
+.stepper .etape.faite .libelle {
+  color: #009E49;
+}
+
+.stepper .trait {
+  flex: 1;
+  height: 2px;
+  margin: 0 0.6rem;
+  margin-bottom: 1.35rem;
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 2px;
+  transition: background 0.6s ease;
+}
+
+.stepper .trait.faite {
+  background: #009E49;
+}
+
+/* ===== Blocs d'étape ===== */
+.bloc {
+  animation: apparait 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes apparait {
+  from { opacity: 0; transform: translateX(22px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.bloc-titre {
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+}
+
+.bloc-sous-titre {
+  color: #A0AEC0;
+  font-size: 0.84rem;
+  margin: 0 0 1.3rem;
+  line-height: 1.5;
+}
+
+.champ {
+  margin-bottom: 1rem;
+}
+
+.etiquette {
+  display: block;
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-bottom: 0.45rem;
+}
+
+/* ===== Champs de saisie (repris du login) ===== */
+.login-input-group {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 12px !important;
+  padding: 0.65rem 1.1rem !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.login-input-group:hover {
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  background: rgba(255, 255, 255, 0.07) !important;
+}
+
+.login-input-group:focus-within {
+  border-color: #FF8200 !important;
+  background: #111613 !important;
+  box-shadow: 0 0 15px rgba(255, 130, 0, 0.2);
+}
+
+.login-input-group input {
+  flex: 1 1 auto !important;
+  min-width: 0;
+  font-size: 0.93rem;
+  color: #ffffff !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  padding: 0 !important;
+  height: auto !important;
+  width: 100%;
+}
+
+.login-input-group input::placeholder {
+  color: #A0AEC0 !important;
+  opacity: 0.85;
+}
+
+.login-input-group input:-webkit-autofill,
+.login-input-group input:-webkit-autofill:hover,
+.login-input-group input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #ffffff !important;
+  -webkit-box-shadow: 0 0 0px 1000px #111613 inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.login-input-group .input-icon {
+  color: #009E49 !important;
+  font-size: 1.05rem;
+  margin-left: 12px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.login-input-group:focus-within .input-icon {
+  color: #FF8200 !important;
+  transform: scale(1.1);
+}
+
+/* ===== Choix du canal ===== */
+.canaux {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1.3rem;
+}
+
+.canal {
+  text-align: left;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.canal:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.canal.choisi {
+  border-color: #FF8200;
+  background: rgba(255, 130, 0, 0.09);
+}
+
+.canal-nom {
+  display: block;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.canal-valeur {
+  display: block;
+  margin-top: 0.2rem;
+  color: #A0AEC0;
+  font-size: 0.78rem;
+}
+
+/* ===== Cases du code ===== */
+.code {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 1.1rem;
+}
+
+.case-chiffre {
+  flex: 1;
+  min-width: 0;
+  height: 60px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  outline: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.case-chiffre:focus {
+  border-color: #FF8200;
+  background: #111613;
+  box-shadow: 0 0 15px rgba(255, 130, 0, 0.25);
+}
+
+/* ===== Encarts ===== */
+.info {
+  background: rgba(255, 130, 0, 0.1);
+  border: 1px solid rgba(255, 130, 0, 0.28);
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.info b {
+  display: block;
+  color: #FFC46B;
+  font-size: 0.85rem;
+  margin-bottom: 0.2rem;
+}
+
+.info span {
+  display: block;
+  color: #CBB596;
+  font-size: 0.79rem;
+  line-height: 1.5;
+}
+
+.alerte {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(220, 53, 69, 0.12);
+  border: 1px solid rgba(220, 53, 69, 0.35);
+  border-radius: 12px;
+  padding: 0.7rem 1rem;
+  margin-bottom: 1.1rem;
+  color: #FFC9C2;
+  font-size: 0.84rem;
+  animation: apparait 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.alerte i {
+  color: #FF6B5B;
+  flex-shrink: 0;
+}
+
+/* ===== Jauge de robustesse ===== */
+.jauge {
+  margin-bottom: 1.2rem;
+}
+
+.jauge-fond {
+  height: 6px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.jauge-fond i {
+  display: block;
+  height: 100%;
+  border-radius: 99px;
+  background: #009E49;
+  transition: width 0.35s ease, background 0.35s ease;
+}
+
+.jauge-fond i.moyen { background: #FF8200; }
+.jauge-fond i.faible { background: #dc3545; }
+
+.jauge-texte {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #009E49;
+}
+
+.jauge-texte.moyen { color: #FF8200; }
+.jauge-texte.faible { color: #FF6B5B; }
+
+/* ===== Boutons ===== */
+.btn-principal {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: linear-gradient(135deg, #FF8200, #E06F00) !important;
+  border: none !important;
+  color: #ffffff !important;
+  font-size: 0.97rem;
+  font-weight: 600;
+  border-radius: 12px !important;
+  padding: 0.8rem 1.5rem !important;
+  box-shadow: 0 4px 15px rgba(255, 130, 0, 0.35);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Reflet blanc qui traverse le bouton au survol */
+.btn-principal::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right,
+    rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
+  transform: skewX(-25deg);
+}
+
+.btn-principal:hover {
+  background: linear-gradient(135deg, #FF9529, #FF8200) !important;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(255, 130, 0, 0.5);
+}
+
+.btn-principal:hover::after {
+  left: 150%;
+  transition: left 0.8s ease-in-out;
+}
+
+.btn-principal:active {
+  transform: translateY(-1px);
+}
+
+.liens {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.lien {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #009E49;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.lien:hover:not(:disabled) {
+  color: #FF8200;
+}
+
+.lien:disabled {
+  color: #5a6a5f;
+  cursor: not-allowed;
+}
+
+/* ===== Règle de sécurité ===== */
+.securite {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  background: rgba(0, 158, 73, 0.09);
+  border: 1px solid rgba(0, 158, 73, 0.25);
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  margin-top: 1.7rem;
+  color: #B7D6C3;
+  font-size: 0.79rem;
+  line-height: 1.55;
+}
+
+.securite i {
+  color: #009E49;
+  font-size: 1rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.securite b {
+  display: block;
+  color: #D9EFE2;
+  margin-bottom: 0.15rem;
+}
+
+/* ===== Pied de carte ===== */
+.mdp-pied {
+  color: #E2E8F0;
+  font-size: 0.86rem;
+}
+
+.lien-retour {
+  color: #009E49;
+  font-weight: 600;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.lien-retour::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #FF8200;
+  transition: width 0.3s ease;
+}
+
+.lien-retour:hover { color: #FF8200; }
+.lien-retour:hover::after { width: 100%; }
+
+.copyright-text {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.78rem;
+}
+
+/* ===== Petits écrans ===== */
+@media (max-width: 575.98px) {
+  .canaux { grid-template-columns: 1fr; }
+  .code { gap: 0.4rem; }
+  .case-chiffre { height: 52px; font-size: 1.25rem; }
+  .stepper .libelle { font-size: 0.68rem; }
+  .liens { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+}
+
+/* ===== Respect du réglage système « moins d'animations » ===== */
+@media (prefers-reduced-motion: reduce) {
+  .bloc, .alerte, .mdp-card.secousse { animation: none !important; }
+  .mdp-card, .canal, .login-input-group, .btn-principal, .case-chiffre,
+  .stepper .rond, .stepper .trait { transition: none !important; }
+}
