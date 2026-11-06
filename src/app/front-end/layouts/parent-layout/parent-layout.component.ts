@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { AuthDemoService } from '../../services/auth-demo.service';
 
 interface ModuleParent {
   numero: number;
@@ -18,6 +19,7 @@ interface ModuleParent {
 export class ParentLayoutComponent {
 
   private readonly router = inject(Router);
+  private readonly auth = inject(AuthDemoService);
 
   /** Les 9 modules de l'espace parent, dans l'ordre du cahier des charges. */
   readonly modules: ModuleParent[] = [
@@ -49,10 +51,7 @@ export class ParentLayoutComponent {
    * connexion n'écrit jamais : la session n'était donc pas réellement fermée.
    */
   seDeconnecter(): void {
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('userName');
-    sessionStorage.clear();
+    this.auth.deconnecter();
     this.router.navigate(['/auth/login']);
   }
 

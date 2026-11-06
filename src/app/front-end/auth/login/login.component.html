@@ -24,19 +24,18 @@
       <!-- FORMULAIRE -->
       <form (ngSubmit)="onLogin()">
 
-        <!-- Champ Identifiant -->
+        <!-- Champ Matricule -->
         <div class="login-input-group mb-3">
           <input
             type="text"
-            placeholder="email"
             [(ngModel)]="email"
             name="email"
-            autocomplete="useremail"
+            autocomplete="username"
             required
-            placeholder="Entrez votre email"
+            placeholder="Entrez votre matricule"
           />
           <span class="input-icon">
-            <i class="bi bi-envelope-fill"></i>
+            <i class="bi bi-person-badge-fill"></i>
           </span>
         </div>
 

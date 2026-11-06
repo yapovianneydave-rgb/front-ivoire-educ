@@ -13,7 +13,11 @@ import {PaiementComponent} from './front-end/pages/parent/paiement/paiement.comp
 import {ReglerUnPaiementComponent} from './front-end/pages/parent/regler-un-paiement/regler-un-paiement.component';
 import {NotationRepetiteurComponent} from './front-end/pages/parent/notation-repetiteur/notation-repetiteur.component';
 import {DemandesSpecialesComponent} from './front-end/pages/parent/demandes-speciales/demandes-speciales.component';
-
+import {RepetiteurLayoutComponent} from './front-end/layouts/repetiteur-layout/repetiteur-layout.component';
+import {MonProfilComponent} from './front-end/pages/repetiteur/mon-profil/mon-profil.component';
+import {AdminLayoutComponent} from './front-end/layouts/admin-layout/admin-layout.component';
+import {AccueilAdminComponent} from './front-end/pages/admin/accueil/accueil-admin.component';
+import {roleGuard} from './front-end/services/auth-demo.service';
 
 export const routes: Routes = [
 
@@ -33,6 +37,7 @@ export const routes: Routes = [
   {
     path: 'parent',
     component: ParentLayoutComponent,
+    canActivate: [roleGuard('parent')],
     children: [
       { path: '', redirectTo: 'tableau-de-bord', pathMatch: 'full' },
       { path: 'tableau-de-bord', component: TableauDeBordParentComponent },
@@ -44,6 +49,28 @@ export const routes: Routes = [
       { path: 'regler-un-paiement', component: ReglerUnPaiementComponent },
       { path: 'notation-repetiteur', component: NotationRepetiteurComponent },
       { path: 'demandes-speciales', component: DemandesSpecialesComponent }
+    ]
+  },
+
+  // ===== Espace Répétiteur =====
+  {
+    path: 'repetiteur',
+    component: RepetiteurLayoutComponent,
+    canActivate: [roleGuard('repetiteur')],
+    children: [
+      { path: '', redirectTo: 'mon-profil', pathMatch: 'full' },
+      { path: 'mon-profil', component: MonProfilComponent },
+    ]
+  },
+
+  // ===== Espace Admin =====
+  {
+    path: 'admin',
+    component: AdminLayoutComponent,
+    canActivate: [roleGuard('admin')],
+    children: [
+      { path: '', redirectTo: 'accueil', pathMatch: 'full' },
+      { path: 'accueil', component: AccueilAdminComponent }
     ]
   },
 

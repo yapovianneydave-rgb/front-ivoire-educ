@@ -1,0 +1,121 @@
+<section class="mp">
+
+  <header class="mp-entete">
+    <p class="mp-surtitre">Module 1 — Mon profil</p>
+    <h1>{{ titreNom() }}</h1>
+    <p class="mp-intro">
+      Informations personnelles, matières enseignées, pièces justificatives et paramètres du compte.
+    </p>
+  </header>
+
+  <div class="mp-grille">
+
+    <!-- ===== Informations personnelles ===== -->
+    <div class="carte">
+      <div class="identite">
+        <span class="avatar">{{ initiales() }}</span>
+        <div>
+          <h2>M. {{ profil().nomComplet }}</h2>
+          <p class="sous">Répétiteur certifié · membre depuis {{ membreDepuis }}</p>
+          @if (profilValide) {
+            <span class="badge badge-ok">Profil validé</span>
+          } @else {
+            <span class="badge badge-attente">Profil en attente</span>
+          }
+        </div>
+      </div>
+
+      <form class="formulaire" (ngSubmit)="enregistrer()">
+        <label>
+          <span>Nom &amp; prénom</span>
+          <input name="nom" [ngModel]="profil().nomComplet" (ngModelChange)="modifier('nomComplet', $event)" />
+        </label>
+        <label>
+          <span>Téléphone</span>
+          <input name="tel" type="tel" [ngModel]="profil().telephone" (ngModelChange)="modifier('telephone', $event)" />
+        </label>
+        <label>
+          <span>Email</span>
+          <input name="email" type="email" [ngModel]="profil().email" (ngModelChange)="modifier('email', $event)" />
+        </label>
+        <label>
+          <span>Commune de rattachement</span>
+          <select name="commune" [ngModel]="profil().commune" (ngModelChange)="modifier('commune', $event)">
+            @for (c of communes; track c) { <option [value]="c">{{ c }}</option> }
+          </select>
+        </label>
+
+        <div class="actions">
+          <button type="submit" class="btn-principal">Enregistrer</button>
+          @if (message()) { <span class="retour ok">{{ message() }}</span> }
+          @if (erreur()) { <span class="retour ko">{{ erreur() }}</span> }
+        </div>
+      </form>
+    </div>
+
+    <div class="colonne">
+
+      <!-- ===== Matières enseignées ===== -->
+      <div class="carte">
+        <div class="carte-titre">
+          <h3>Matières enseignées</h3>
+          <button type="button" class="btn-secondaire" (click)="ajouterMatiere()">+ Ajouter</button>
+        </div>
+
+        <div class="tags">
+          @for (m of matieres(); track m) {
+            <span class="tag">
+              • {{ m }}
+              <button type="button" class="tag-retirer" (click)="retirerMatiere(m)" [attr.aria-label]="'Retirer ' + m">×</button>
+            </span>
+          } @empty {
+            <span class="vide">Aucune matière renseignée.</span>
+          }
+        </div>
+
+        <div class="infos">
+          <div>
+            <p class="etiquette">Niveaux</p>
+            <p class="valeur">{{ niveaux }}</p>
+          </div>
+          <div>
+            <p class="etiquette">Diplôme</p>
+            <p class="valeur">{{ diplome }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Pièces justificatives ===== -->
+      <div class="carte">
+        <h3>Pièces justificatives</h3>
+        <p class="sous">Consultées par l'administration lors de la validation du profil.</p>
+
+        <ul class="pieces">
+          @for (p of pieces(); track p.id) {
+            <li class="piece">
+              <div class="piece-info">
+                <p class="piece-nom">{{ p.libelle }}@if (p.fichier && p.id === 'cv') { — {{ p.fichier }} }</p>
+                <p class="sous">
+                  @if (p.dateDepot) { Déposé le {{ p.dateDepot }} · {{ p.taille }} }
+                  @else { Aucun document déposé }
+                </p>
+              </div>
+
+              <div class="piece-actions">
+                @switch (p.statut) {
+                  @case ('valide') { <span class="badge badge-ok">Validé</span> }
+                  @case ('en-attente') { <span class="badge badge-attente">En attente</span> }
+                }
+                <label [class]="p.statut === 'absent' ? 'btn-orange' : 'btn-secondaire'">
+                  {{ p.statut === 'absent' ? 'Téléverser' : 'Remplacer' }}
+                  <input type="file" accept=".pdf,.jpg,.jpeg,.png" hidden (change)="deposer(p, $event)" />
+                </label>
+              </div>
+            </li>
+          }
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>

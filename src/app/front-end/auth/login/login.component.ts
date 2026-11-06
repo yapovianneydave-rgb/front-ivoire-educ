@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { ACCUEIL_PAR_ROLE, AuthDemoService } from '../../services/auth-demo.service';
 
 @Component({
   selector: 'app-login',
@@ -19,11 +20,7 @@ export class LoginComponent {
   password: string = '';
   showPassword:boolean = false;
 
-  private readonly IDENTIFIANT_VALIDE = '150503Y@';
-  private readonly MOT_DE_PASSE_VALIDE = 'ivoire2026';
-
-
-  constructor(private router: Router) {}
+  constructor(private router: Router, private auth: AuthDemoService) {}
 
   onLogin(): void {
 
@@ -33,19 +30,14 @@ export class LoginComponent {
     }
 
 
-    if (this.email !== this.IDENTIFIANT_VALIDE || this.password !== this.MOT_DE_PASSE_VALIDE) {
-      alert('Identifiant ou mot de passe incorrect');
+    // Le champ « email » porte désormais le matricule (PAR-…, REP-…, ADM-…).
+    const role = this.auth.connecter(this.email, this.password);
+    if (!role) {
+      alert('Matricule ou mot de passe incorrect');
       return;
     }
 
-    console.log('✅ Connexion réussie:', this.email);
-
-    localStorage.setItem('isLoggedIn', 'true');
-    localStorage.setItem('userId', this.email);
-    localStorage.setItem('userName', 'Kouassi Jean');
-
-
-    this.router.navigate(['/parent/tableau-de-bord']);
+    this.router.navigate([ACCUEIL_PAR_ROLE[role]]);
   }
 
   togglePassword(): void {

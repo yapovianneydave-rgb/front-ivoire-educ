@@ -1,0 +1,49 @@
+<div class="admin-wrapper">
+
+  <!-- ============ NAVIGATION DE L'ESPACE ADMINISTRATEUR ============ -->
+  <aside class="admin-nav">
+
+    <div class="admin-marque">
+      <img src="assets/images/IvoireEduc_Elite_logo_v4.jpg" alt="IvoireEduc Elite" />
+      <span>Ivoire-Educ Elite</span>
+    </div>
+
+    <h6 class="admin-nav-titre">Écrans — Admin</h6>
+
+    <ul class="admin-nav-liste">
+      @for (module of modules; track module.numero) {
+        <li>
+          @if (module.lien) {
+            <a [routerLink]="module.lien" routerLinkActive="actif">
+              <span class="numero">{{ module.numero }}</span>
+              <span class="libelle">{{ module.libelle }}</span>
+            </a>
+          } @else {
+            <span class="bientot" title="Écran non encore développé">
+              <span class="numero">{{ module.numero }}</span>
+              <span class="libelle">{{ module.libelle }}</span>
+            </span>
+          }
+        </li>
+      }
+    </ul>
+
+    <!-- Seule sortie de l'application depuis la suppression de l'en-tête. -->
+    <div class="admin-pied">
+      <div class="admin-utilisateur">
+        <span class="initiales">{{ initiales }}</span>
+        <span class="nom">{{ nomUtilisateur }}</span>
+      </div>
+      <button type="button" class="deconnexion" (click)="seDeconnecter()">
+        Se déconnecter
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- ============ CONTENU DE L'ÉCRAN ============ -->
+  <main class="admin-contenu">
+    <router-outlet></router-outlet>
+  </main>
+
+</div>
