@@ -1,0 +1,104 @@
+<section class="me">
+
+  <header class="me-entete">
+    <p class="me-surtitre">Module 3 — Mes élèves</p>
+    <h1>Élèves qui me sont attribués</h1>
+    <p class="me-intro">
+      Fiche détaillée par élève : classe, matière, contacts parents, quartier et objectifs pédagogiques.
+    </p>
+  </header>
+
+  <!-- ===== Tableau des élèves ===== -->
+  <div class="carte carte-table">
+    <div class="table-defilante">
+      <table class="eleves">
+        <thead>
+          <tr>
+            <th>Élève</th>
+            <th>Classe</th>
+            <th>Matière</th>
+            <th>Contact parent</th>
+            <th>Quartier</th>
+            <th><span class="sr-only">Actions</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (e of eleves; track e.id) {
+            <tr [class.selectionne]="e.id === selection().id" (click)="selectionner(e)">
+              <td>
+                <button type="button" class="eleve" (click)="selectionner(e)"
+                        [attr.aria-pressed]="e.id === selection().id"
+                        [attr.aria-label]="'Voir la fiche de ' + e.prenom + ' ' + e.nom">
+                  <span class="avatar" [style.background]="e.couleur">{{ initiales(e) }}</span>
+                  <span class="nom">{{ e.prenom }} {{ e.nom }}</span>
+                </button>
+              </td>
+              <td>{{ e.classe }}</td>
+              <td><span class="tag">• {{ e.matiere }}</span></td>
+              <td class="contact">{{ e.parent }} · <span class="mono">{{ numeroMasque(e.telephoneParent) }}</span></td>
+              <td>{{ e.quartier }}</td>
+              <td class="col-action">
+                <a class="btn-secondaire" [href]="lienAppel(e.telephoneParent)"
+                   (click)="$event.stopPropagation()"
+                   [attr.aria-label]="'Appeler ' + e.parent">Appeler</a>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== Fiche détaillée ===== -->
+  @let e = selection();
+  <h2 class="fiche-titre">Fiche détaillée — {{ e.prenom }} {{ e.nom }}</h2>
+
+  <div class="carte fiche">
+    <dl class="resume">
+      <div><dt>Classe</dt><dd>{{ e.classe }}</dd></div>
+      <div><dt>Matière</dt><dd>{{ e.matiere === 'Maths' ? 'Mathématiques' : e.matiere }}</dd></div>
+      <div><dt>Quartier</dt><dd>{{ e.quartier }}</dd></div>
+      <div><dt>Parent</dt><dd>{{ e.parent }}</dd></div>
+    </dl>
+
+    <div class="fiche-bas">
+      <div>
+        <h3>Objectifs pédagogiques de la période</h3>
+        <p class="objectifs">{{ e.objectifs }}</p>
+      </div>
+
+      <div>
+        <h3>Bilan en cours</h3>
+        @if (e.bilan; as b) {
+          <div class="bilan">
+            <div class="bilan-entete">
+              <p class="bilan-periode">Période du {{ b.du }} au {{ b.au }}</p>
+              @if (b.statut === 'brouillon') {
+                <span class="badge badge-brouillon">Brouillon</span>
+              } @else {
+                <span class="badge badge-ok">Envoyé</span>
+              }
+            </div>
+            <div class="barre" role="progressbar" [attr.aria-valuenow]="b.notionsValidees"
+                 aria-valuemin="0" [attr.aria-valuemax]="b.notionsTotal"
+                 [attr.aria-label]="'Notions validées'">
+              <span [style.width.%]="progression(b)"></span>
+            </div>
+            <div class="bilan-pied">
+              <p class="sous">{{ b.notionsValidees }} notions validées sur {{ b.notionsTotal }}</p>
+              <!-- Le module 6 « Rédiger un bilan » n'est pas encore intégré. -->
+              <button type="button" class="btn-secondaire" disabled title="Disponible avec le module 6 — Rédiger un bilan">
+                Rédiger
+              </button>
+            </div>
+          </div>
+        } @else {
+          <div class="bilan bilan-vide">
+            <p class="sous">Aucun bilan en cours pour cet élève.</p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+</section>
