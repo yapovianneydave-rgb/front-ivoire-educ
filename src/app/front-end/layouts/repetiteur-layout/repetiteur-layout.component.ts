@@ -24,7 +24,7 @@ export class RepetiteurLayoutComponent {
   /** Les 9 modules de l'espace répétiteur, dans l'ordre du cahier des charges. */
   readonly modules: ModuleRepetiteur[] = [
     { numero: 1, libelle: 'Mon profil', lien: '/repetiteur/mon-profil' },
-    { numero: 2, libelle: 'Mes disponibilités' },
+    { numero: 2, libelle: 'Mes disponibilités', lien: '/repetiteur/mes-disponibilites' },
     { numero: 3, libelle: 'Mes élèves', lien: '/repetiteur/mes-eleves' },
     { numero: 4, libelle: 'Mon planning' },
     { numero: 5, libelle: 'Mes séances' },

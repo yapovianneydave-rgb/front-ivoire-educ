@@ -1,0 +1,149 @@
+<section class="md">
+
+  <header class="md-entete">
+    <p class="md-surtitre">Module 2 — Mes disponibilités</p>
+    <h1>Déclarer mes créneaux</h1>
+    <p class="md-intro">
+      Indiquez les plages où vous acceptez d'être affecté, vos communes d'intervention
+      et vos absences prévues.
+    </p>
+  </header>
+
+  <div class="md-grille">
+
+    <!-- ===== Grille hebdomadaire ===== -->
+    <div class="carte carte-grille">
+      <div class="carte-titre">
+        <h3>Grille hebdomadaire</h3>
+        <p class="sous">Cochez les plages où vous acceptez d'être affecté.</p>
+      </div>
+
+      <div class="table-defilante">
+        <table class="semaine">
+          <thead>
+            <tr>
+              <th class="col-plage">Plage</th>
+              @for (j of jours; track j) { <th>{{ j }}</th> }
+            </tr>
+          </thead>
+          <tbody>
+            @for (p of plages; track p.id) {
+              <tr>
+                <th class="col-plage" scope="row">{{ p.libelle }}</th>
+                @if (p.bloquee) {
+                  <td [attr.colspan]="jours.length" class="bloquee">— {{ p.bloquee }} —</td>
+                } @else {
+                  @for (j of jours; track j; let i = $index) {
+                    <td>
+                      <button type="button" class="case" [class.on]="estCoche(p, i)"
+                              [attr.aria-pressed]="estCoche(p, i)"
+                              [attr.aria-label]="p.libelle + ' ' + j"
+                              (click)="basculer(p, i)">
+                        <span class="point"></span>{{ estCoche(p, i) ? '✓' : '—' }}
+                      </button>
+                    </td>
+                  }
+                }
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pied-grille">
+        <p class="sous">
+          {{ formaterHeures(heuresDeclarees()) }} déclarées par semaine ·
+          {{ formaterHeures(heuresAffectees) }} déjà affectées
+        </p>
+        <div class="pied-actions">
+          @if (messageGrille()) { <span class="retour ok">{{ messageGrille() }}</span> }
+          @if (erreurGrille()) { <span class="retour ko">{{ erreurGrille() }}</span> }
+          <button type="button" class="btn-principal" (click)="enregistrerGrille()">
+            Enregistrer mes disponibilités
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="colonne">
+
+      <!-- ===== Zones d'intervention ===== -->
+      <div class="carte">
+        <h3>Zones d'intervention</h3>
+        <p class="sous">Communes où vous acceptez de vous déplacer.</p>
+
+        <div class="tags">
+          @for (z of zones(); track z) {
+            <span class="tag">
+              • {{ z }}
+              <button type="button" class="tag-retirer" (click)="retirerZone(z)" [attr.aria-label]="'Retirer ' + z">×</button>
+            </span>
+          }
+          @if (ajoutZoneOuvert()) {
+            <select class="select-zone" #choix (change)="ajouterZone(choix.value)" (blur)="ajoutZoneOuvert.set(false)">
+              <option value="">Choisir…</option>
+              @for (c of communesDisponibles(); track c) { <option [value]="c">{{ c }}</option> }
+            </select>
+          } @else if (communesDisponibles().length) {
+            <button type="button" class="btn-secondaire btn-mini" (click)="ajoutZoneOuvert.set(true)">+ Ajouter</button>
+          }
+        </div>
+
+        @for (e of elevesAffectes; track e.nom) {
+          <div class="alerte" [class.alerte-ko]="!estDansMesZones(e)">
+            <p class="alerte-titre">Élève hors zone</p>
+            <p>
+              {{ e.nom }} ({{ e.commune }}, {{ e.zone }}) vous est affectée :
+              @if (estDansMesZones(e)) {
+                cette commune fait bien partie de vos zones.
+              } @else {
+                cette commune ne fait plus partie de vos zones. Ajoutez-la ou prévenez l'administration.
+              }
+            </p>
+          </div>
+        }
+      </div>
+
+      <!-- ===== Absence programmée ===== -->
+      <div class="carte">
+        <h3>Absence programmée</h3>
+        <p class="sous">Les créneaux concernés sont retirés du planning et les familles prévenues.</p>
+
+        <form class="formulaire" (ngSubmit)="declarerAbsence()">
+          <label>
+            <span>Du</span>
+            <input type="date" name="du" [(ngModel)]="absence.du" />
+          </label>
+          <label>
+            <span>Au</span>
+            <input type="date" name="au" [(ngModel)]="absence.au" [min]="absence.du" />
+          </label>
+          <label class="pleine">
+            <span>Motif (visible par l'administration seulement)</span>
+            <input type="text" name="motif" [(ngModel)]="absence.motif" placeholder="Ex. congés familiaux" />
+          </label>
+          <div class="pleine actions">
+            <button type="submit" class="btn-secondaire">Déclarer l'absence</button>
+            @if (erreurAbsence()) { <span class="retour ko">{{ erreurAbsence() }}</span> }
+          </div>
+        </form>
+
+        @if (absences().length) {
+          <ul class="absences">
+            @for (a of absences(); track $index) {
+              <li>
+                <div>
+                  <p class="absence-dates">Du {{ formaterDate(a.du) }} au {{ formaterDate(a.au) }}</p>
+                  <p class="sous">{{ a.motif }}</p>
+                </div>
+                <span class="badge badge-attente">Déclarée</span>
+                <button type="button" class="tag-retirer" (click)="annulerAbsence($index)" aria-label="Annuler l'absence">×</button>
+              </li>
+            }
+          </ul>
+        }
+      </div>
+
+    </div>
+  </div>
+</section>
