@@ -15,7 +15,7 @@ import {NotationRepetiteurComponent} from './front-end/pages/parent/notation-rep
 import {DemandesSpecialesComponent} from './front-end/pages/parent/demandes-speciales/demandes-speciales.component';
 import {RepetiteurLayoutComponent} from './front-end/layouts/repetiteur-layout/repetiteur-layout.component';
 import {MonProfilComponent} from './front-end/pages/repetiteur/mon-profil/mon-profil.component';
-import {MesDisponibilitesComponent} from './front-end/pages/repetiteur/mes-disponibilites/mes-disponibilites.component';
+import { MesDisponibilitesComponent } from './front-end/pages/repetiteur/mes-disponibilites/mes-disponibilites.component';
 import {MesElevesComponent} from './front-end/pages/repetiteur/mes-eleves/mes-eleves.component';
 import {AdminLayoutComponent} from './front-end/layouts/admin-layout/admin-layout.component';
 import {AccueilAdminComponent} from './front-end/pages/admin/accueil/accueil-admin.component';
